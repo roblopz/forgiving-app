@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "_dist",
+    "target": "es6",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "jsx": "react",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "downlevelIteration": true,
+    "paths": {
+      "@components/*": ["src/components/*"]
+    }
+  },
+  "exclude": [
+    "**/dist",
+    "**/_dist",
+    "**/node_modules",
+    "tools/**"
+  ]
+}
