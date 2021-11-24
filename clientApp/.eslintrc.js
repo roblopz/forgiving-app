@@ -53,6 +53,8 @@ module.exports = {
     }
   ],
   rules: {
-    "no-console": 1
+    "no-console": 1,
+    "react/prop-types": 0,
+    "react/react-in-jsx-scope": 0
   }
 }

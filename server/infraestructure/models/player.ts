@@ -1,4 +1,4 @@
-import { IsDefined, IsInt, IsNotEmpty, Max, Min } from "class-validator";
+import { IsDefined, IsIn, IsInt, IsNotEmpty, Max, Min } from "class-validator";
 import { AutoMap } from '@automapper/classes';
 
 import { ID, IPlayer, PlayerStatus } from "@domain/entities";
@@ -15,6 +15,7 @@ export class Player implements IPlayer {
 
   @AutoMap({ typeFn: () => String })
   @IsDefined()
+  @IsIn([PlayerStatus.WAR, PlayerStatus.PEACE] as PlayerStatus[])
   status: PlayerStatus;
 
   @AutoMap({ typeFn: () => Number })

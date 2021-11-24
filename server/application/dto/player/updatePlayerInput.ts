@@ -8,7 +8,7 @@ export class UpdatePlayerInput {
   @Field(_type => ID)
   id: string;
   
-  @Field(_type => String)
+  @Field(_type => PlayerStatus)
   @IsIn(['PEACE', 'WAR'] as PlayerStatus[])
   status: PlayerStatus;
 

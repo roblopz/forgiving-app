@@ -5,8 +5,10 @@ import { IPlayerRepository } from "@domain/repository/IPlayerRepository";
 import { Player } from "@infraestructure/models";
 import { IoCToken } from "@domain/core/IoCToken";
 import { ID } from "@domain/entities";
+import { AppService } from "@application/core/decorators/appServiceDecorator";
 
 @injectable()
+@AppService(IoCToken.PlayerService)
 export class PlayerService implements IPlayerService {
   constructor(@inject(IoCToken.PlayerRepository) private playerRepository: IPlayerRepository) { }
   

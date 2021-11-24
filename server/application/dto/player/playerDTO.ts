@@ -1,10 +1,11 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, ObjectType, registerEnumType } from "type-graphql";
 import { AutoMap } from '@automapper/classes';
-import { IsIn, IsInt, Max, Min } from "class-validator";
 
 import { PlayerStatus } from "@domain/entities";
 
-@ObjectType()
+registerEnumType(PlayerStatus, { name: 'PlayerStatus' });
+
+@ObjectType('Player')
 export class PlayerDTO {
   @AutoMap({ typeFn: () => String })
   @Field(_type => ID)
@@ -15,14 +16,10 @@ export class PlayerDTO {
   name: string;
 
   @AutoMap({ typeFn: () => String })
-  @Field(_type => String)
-  @IsIn(['PEACE', 'WAR'] as PlayerStatus[])
+  @Field(_type => PlayerStatus)
   status?: PlayerStatus;
 
   @AutoMap({ typeFn: () => Number })
   @Field(_type => Number)
-  @IsInt()
-  @Min(-100)
-  @Max(100)
   hateLevel: number;
 }

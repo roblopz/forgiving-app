@@ -1,6 +1,9 @@
 import { IEntity } from "./IEntity";
 
-export type PlayerStatus = 'WAR' | 'PEACE';
+export enum PlayerStatus {
+  WAR = 'WAR',
+  PEACE = 'PEACE'
+}
 
 export interface IPlayer extends IEntity {
   name: string;

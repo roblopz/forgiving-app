@@ -1,0 +1,8 @@
+query GetAllPlayers {
+  players: getAllPlayers {
+    id
+    name
+    hateLevel
+    status 
+  }
+}

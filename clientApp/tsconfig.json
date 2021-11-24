@@ -9,7 +9,7 @@
       "es6",
       "dom"
     ],
-    "jsx": "react",
+    "jsx": "react-jsx",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
@@ -20,7 +20,8 @@
     "noImplicitAny": true,
     "downlevelIteration": true,
     "paths": {
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/app/components/*"],
+      "@graphql/*": ["src/graphql/*"]
     }
   },
   "exclude": [
