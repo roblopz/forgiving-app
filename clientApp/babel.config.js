@@ -7,6 +7,7 @@ module.exports = {
   ],
   plugins: [
     '@babel/plugin-syntax-dynamic-import',
-    'react-refresh/babel'
+    'react-refresh/babel',
+    '@babel/plugin-transform-runtime'
   ]
 };

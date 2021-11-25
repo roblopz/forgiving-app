@@ -23,4 +23,7 @@ export class Player implements IPlayer {
   @Min(-100)
   @Max(100)
   hateLevel: number;
+
+  @AutoMap({ typeFn: () => String })
+  imagePath?: string;
 }

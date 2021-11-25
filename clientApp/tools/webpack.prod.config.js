@@ -6,10 +6,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
+const settings = require('config');
 const paths = require('./paths');
 const tsConfigPath = path.resolve(paths.clientRoot, 'tsconfig.json');
 
-console.log(paths.distPath);
 module.exports = {
   mode: 'production',
   target: 'web',
@@ -23,12 +23,16 @@ module.exports = {
   },
   plugins: [
     new DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify(settings.get('env'))
     }),
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.indexHtml,
-      favicon: path.resolve(paths.assets, 'favicon.ico')
+      favicon: paths.favicon,
+      templateParameters: {
+        NODE_ENV: settings.get('env'),
+        __HOST_URL__: settings.get('Server.address'),
+      },
     }),
     new MiniCssExtractPlugin({
       filename: 'styles/[name].[contenthash].css',

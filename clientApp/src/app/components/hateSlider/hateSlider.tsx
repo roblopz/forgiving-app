@@ -1,6 +1,5 @@
-import { useMemo } from 'react';
+import React from 'react';
 import { SxProps, Theme } from '@mui/system';
-import Typography from '@mui/material/Typography';
 import Slider, { SliderProps } from '@mui/material/Slider';
 import Box from '@mui/material/Box';
 
@@ -19,14 +18,6 @@ export const HateSlider: React.FC<IHateSliderProps> = ({
   disabled,
   onChange
 }) => {
-  const text = useMemo(() => {
-    if (value === 0) return 'Indiferencia';
-    else if (value === -100) return 'Amor incondicional';
-    else if (value === 100) return 'Odio máximo';
-    else if (value < 0) return 'Amor';
-    else return 'Odio';
-  }, [value]);
-
   return (
     <Box sx={{ ...sxWrapper }}>
       <Slider sx={{ 
@@ -36,17 +27,14 @@ export const HateSlider: React.FC<IHateSliderProps> = ({
           if (value === 0) return 'warning.main';
           else if (value < 0) return 'primary.main';
           else return 'error.main'
-        }
-      }} 
-        disabled={disabled} size="small" 
+        },
+        cursor: disabled ? 'default' : 'pointer'
+      }}
+        size="small" 
         value={value} 
         min={-100} 
         max={100} 
-        onChange={onChange}/>
-
-      <Typography sx={{ marginLeft: 1, textAlign: 'center', whiteSpace: 'nowrap' }}>
-        {text}
-      </Typography>
+        onChange={disabled ? undefined : onChange}/>
     </Box>
   );
 }

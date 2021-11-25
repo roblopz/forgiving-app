@@ -12,6 +12,7 @@ import { ApolloServerPluginDrainHttpServer, PluginDefinition } from 'apollo-serv
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
 
+import config from '@shared/config';
 import { AppContainer } from '@application/core/IoC/container';
 import { IGraphqlCtx } from '@application/core/graphqlCtx';
 import { authExpressMiddleware, graphqlAuthChecker } from '@application/core/auth/middleware';
@@ -29,8 +30,8 @@ function ApolloSubscriptionServerStartPlugin(subscriptionServer: SubscriptionSer
   };
 }
 
-const appPort = 4000;
-const graphqlPath = '/graphql';
+const appPort = config.getSetting('Server.port');
+const graphqlPath = config.getSetting('Server.graphqlPath');
 
 (async () => {
   try {
@@ -63,12 +64,13 @@ const graphqlPath = '/graphql';
     });
 
     app.use(authExpressMiddleware(AppContainer));
+    app.use(express.static(path.resolve(__dirname, 'application/public')));
 
     await server.start();
     server.applyMiddleware({ app, path: graphqlPath });
 
     httpServer.listen({ port: appPort }, () => {
-      console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+      console.log(`🚀 Server ready at http://localhost:${appPort}${server.graphqlPath}`);
     });    
   } catch (err) {
     console.error(err);

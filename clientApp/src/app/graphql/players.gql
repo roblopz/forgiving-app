@@ -1,0 +1,19 @@
+fragment Player on Player{
+  id
+  name
+  hateLevel
+  status
+  imagePath
+}
+
+query GetAllPlayers {
+  players: getAllPlayers {
+    ...Player
+  }
+}
+
+subscription OnPlayerUpdated {
+  player: onPlayerUpdated {
+    ...Player
+  }
+}

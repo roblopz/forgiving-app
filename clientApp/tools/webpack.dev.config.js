@@ -6,6 +6,7 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
+const settings = require('config');
 const paths = require('./paths');
 const tsConfigPath = path.resolve(paths.clientRoot, 'tsconfig.json');
 
@@ -19,18 +20,28 @@ module.exports = {
     filename: '[chunkhash].bundle.js'
   },
   devServer: {
-    hot: true,
+    hot: 'only',
     historyApiFallback: true,
-    port: 3000
+    port: settings.get('Client.port'),
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false
+      }
+    },
   },
   plugins: [
     new DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
+      'process.env.NODE_ENV': JSON.stringify(settings.get('env'))
     }),
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.indexHtml,
-      favicon: path.resolve(paths.assets, 'favicon.ico')
+      favicon: paths.favicon,
+      templateParameters: {
+        NODE_ENV: settings.get('env'),
+        __HOST_URL__: settings.get('Server.address'),
+      },
     }),
     new ReactRefreshWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin({ typescript: { configFile: tsConfigPath } })
@@ -39,7 +50,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
     plugins: [new TsconfigPathsPlugin({ configFile: tsConfigPath })]
   },
-  module: {
+  module: {    
     rules: [
       {
         test: /\.(js|ts)x?$/,

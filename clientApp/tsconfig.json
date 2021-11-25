@@ -21,7 +21,11 @@
     "downlevelIteration": true,
     "paths": {
       "@components/*": ["src/app/components/*"],
-      "@graphql/*": ["src/graphql/*"]
+      "@graphql/*": ["src/app/graphql/*"],
+      "@store/*": ["src/app/store/*"],
+      "@lib/*": ["src/app/lib/*"],
+      "@assets/*": ["src/app/assets"],
+      "@shared/*": ["../shared/*"]
     }
   },
   "exclude": [

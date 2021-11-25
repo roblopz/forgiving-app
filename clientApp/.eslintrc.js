@@ -49,12 +49,14 @@ module.exports = {
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended"
       ],
-      rules: { }
+      rules: {
+        "@typescript-eslint/no-empty-interface": 0
+      }
     }
   ],
   rules: {
     "no-console": 1,
     "react/prop-types": 0,
-    "react/react-in-jsx-scope": 0
+    "react/react-in-jsx-scope": 0    
   }
 }

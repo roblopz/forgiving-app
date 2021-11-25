@@ -17,9 +17,13 @@ export class PlayerDTO {
 
   @AutoMap({ typeFn: () => String })
   @Field(_type => PlayerStatus)
-  status?: PlayerStatus;
+  status: PlayerStatus;
 
   @AutoMap({ typeFn: () => Number })
   @Field(_type => Number)
   hateLevel: number;
+
+  @AutoMap({ typeFn: () => String })
+  @Field(_type => String, { nullable: true })
+  imagePath?: string;
 }

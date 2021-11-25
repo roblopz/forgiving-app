@@ -1,12 +1,12 @@
 overwrite: true
 schema: "http://localhost:4000/graphql"
-documents: "clientApp/src/graphql/**/*.gql"
+documents: "clientApp/src/app/graphql/**/*.gql"
 generates:
-  clientApp/src/graphql/types/index.ts:
+  clientApp/src/app/graphql/types/index.ts:
     plugins:
       - "typescript"
       - "typescript-operations"
-      - "typescript-react-query"
-    config:
-      fetcher:
-        endpoint: 'http://localhost:4000/graphql'
+      - "typescript-react-apollo"
+      - add:
+          content: 'export const graphqlPath = "http://localhost:4000/graphql";'
+          placement: 'append'

@@ -5,7 +5,7 @@ import { AutoMap } from "@automapper/classes";
 
 registerEnumType(UserType, { name: 'UserType' });
 
-@ObjectType()
+@ObjectType("User")
 export class UserDTO {
   @AutoMap({ typeFn: () => String })
   @Field(_type => ID)

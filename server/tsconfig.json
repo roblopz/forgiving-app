@@ -21,7 +21,8 @@
       "@applicationDto/*": ["application/dto/*"],
       "@applicationService": ["application/services/index"],      
       "@domain/*": ["domain/*"],
-      "@infraestructure/*": ["infraestructure/*"]
+      "@infraestructure/*": ["infraestructure/*"],
+      "@shared/*": ["../shared/*"]
     }
   }
 }
