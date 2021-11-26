@@ -1,1 +1,3 @@
 env: NODE_ENV
+Server:
+  jwtSecret: JWT_SECRET

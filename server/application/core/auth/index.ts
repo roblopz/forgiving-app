@@ -1,18 +1,10 @@
-import { IAppUser } from '@domain/entities';
-import { verify as jwtVerify, sign as jwtSign, VerifyErrors } from 'jsonwebtoken';
+import { verify as jwtVerify, sign as jwtSign, VerifyErrors, SignOptions } from 'jsonwebtoken';
 
-const jwtSecret = 'shhh';
-const expiration = 3600; // 1hour
-
-export interface IAuthPayload {
-  userId: string;
-}
-
-export async function verify(authToken: string): Promise<[IAuthPayload, VerifyErrors?]> {
+export async function verify<T>(authToken: string, secret: string): Promise<[T, VerifyErrors?]> {
   try {
-    const payload = await new Promise<IAuthPayload>((resolve, reject) => {
-      const cb = (err: VerifyErrors, payload: IAuthPayload) => err ? reject(err) : resolve(payload);
-      jwtVerify(authToken, jwtSecret, cb);
+    const payload = await new Promise<T>((resolve, reject) => {
+      const cb = (err: VerifyErrors, payload: T) => err ? reject(err) : resolve(payload);
+      jwtVerify(authToken, secret, cb);
     });
 
     return [payload];
@@ -21,13 +13,13 @@ export async function verify(authToken: string): Promise<[IAuthPayload, VerifyEr
   }  
 }
 
-export async function getAuthToken(usr: IAppUser): Promise<string> {
-  const payload: IAuthPayload = { userId: usr.id as string };
-
+export async function getAuthToken<T extends string | object | Buffer>(
+  payload: T, 
+  secret: string,
+  options: SignOptions
+): Promise<string> {
   return new Promise<string>((resolve, reject) => {
-    jwtSign(payload, jwtSecret, {
-      expiresIn: expiration
-    }, (err, authToken) => {
+    jwtSign(payload, secret, options, (err, authToken) => {
       if (err) reject(err);
       else resolve(authToken);
     });

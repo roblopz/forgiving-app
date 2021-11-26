@@ -40,7 +40,13 @@ module.exports = {
       favicon: paths.favicon,
       templateParameters: {
         NODE_ENV: settings.get('env'),
-        __HOST_URL__: settings.get('Server.address'),
+        __APP_CONFIG__: JSON.stringify({
+          env: settings.get('env'),
+          hostUrl: settings.get('Server.address'),
+          graphqlPath: settings.get('Server.graphqlPath'),
+          expHours: settings.get('Auth.expHours'),
+          devAuthTokenHeader: settings.get('Auth.devAuthTokenHeader')
+        })
       },
     }),
     new ReactRefreshWebpackPlugin(),

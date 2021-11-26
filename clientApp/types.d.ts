@@ -1,8 +1,17 @@
+
 export {};
 
+type Config = import('../shared/config/index').Config;
+
 declare global {
+  type AppGlobalConfig = Pick<Config, 'env'> & 
+    Config['Auth'] &
+    Pick<Config['Server'], 'graphqlPath'> & {
+    hostUrl: string;
+  };
+
   interface Window {
-    __HOST_URL__: string,
-    NODE_ENV: 'development' | 'production' | 'staging'
+    NODE_ENV: 'development' | 'production' | 'staging',
+    __APP_CONFIG__: AppGlobalConfig
   }
 }

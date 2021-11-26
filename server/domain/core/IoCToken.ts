@@ -1,7 +1,8 @@
 
 const serviceTokens = {
   PlayerService: 'PLAYER_SERVICE',
-  UserService: 'USER_SERVICE'
+  UserService: 'USER_SERVICE',
+  AuthService: 'AUTH_SERVICE'
 };
 
 const repositoryTokens = {

@@ -15,8 +15,8 @@ export class UserDTO {
   @AutoMap({ typeFn: () => String })
   userName: string;
 
-  @Field(_type => PlayerDTO)
-  player: PlayerDTO;
+  @Field(_type => PlayerDTO, { nullable: true })
+  player?: PlayerDTO;
 
   @Field(_type => UserType)
   @AutoMap({ typeFn: () => String })

@@ -17,7 +17,7 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  login: UserAuthResponse;
+  login: User;
   updatePlayer: Player;
 };
 
@@ -71,15 +71,9 @@ export type UpdatePlayerInput = {
 export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
-  player: Player;
+  player?: Maybe<Player>;
   type: UserType;
   userName: Scalars['String'];
-};
-
-export type UserAuthResponse = {
-  __typename?: 'UserAuthResponse';
-  authToken: Scalars['String'];
-  user: User;
 };
 
 export enum UserType {
@@ -99,13 +93,15 @@ export type OnPlayerUpdatedSubscriptionVariables = Exact<{ [key: string]: never;
 
 export type OnPlayerUpdatedSubscription = { __typename?: 'Subscription', player: { __typename?: 'Player', id: string, name: string, hateLevel: number, status: PlayerStatus, imagePath?: string | null | undefined } };
 
+export type UserFragment = { __typename?: 'User', id: string, type: UserType, userName: string, player?: { __typename?: 'Player', hateLevel: number, id: string, name: string, status: PlayerStatus } | null | undefined };
+
 export type LoginMutationVariables = Exact<{
   password: Scalars['String'];
   username: Scalars['String'];
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', user: { __typename?: 'UserAuthResponse', user: { __typename?: 'User', id: string, type: UserType, userName: string, player: { __typename?: 'Player', id: string } } } };
+export type LoginMutation = { __typename?: 'Mutation', user: { __typename?: 'User', id: string, type: UserType, userName: string, player?: { __typename?: 'Player', hateLevel: number, id: string, name: string, status: PlayerStatus } | null | undefined } };
 
 export const PlayerFragmentDoc = gql`
     fragment Player on Player {
@@ -114,6 +110,19 @@ export const PlayerFragmentDoc = gql`
   hateLevel
   status
   imagePath
+}
+    `;
+export const UserFragmentDoc = gql`
+    fragment User on User {
+  id
+  player {
+    hateLevel
+    id
+    name
+    status
+  }
+  type
+  userName
 }
     `;
 export const GetAllPlayersDocument = gql`
@@ -182,17 +191,10 @@ export type OnPlayerUpdatedSubscriptionResult = Apollo.SubscriptionResult<OnPlay
 export const LoginDocument = gql`
     mutation Login($password: String!, $username: String!) {
   user: login(password: $password, username: $username) {
-    user {
-      id
-      player {
-        id
-      }
-      type
-      userName
-    }
+    ...User
   }
 }
-    `;
+    ${UserFragmentDoc}`;
 export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**

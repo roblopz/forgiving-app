@@ -4,9 +4,14 @@ export type Config = {
   Server: {
     port: number,
     graphqlPath: string,
-    env: string
+    env: string,
+    jwtSecret: string
   },
   Client: {
     port: number
+  },
+  Auth: {
+    expHours: number,
+    devAuthTokenHeader?: string
   }
 }

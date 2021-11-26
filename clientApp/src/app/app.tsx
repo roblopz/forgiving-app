@@ -9,6 +9,7 @@ import { useGetAllPlayersLazyQuery } from '@graphql/types';
 import { MarkersWrapper } from '@components/markers/markersWrapper';
 import { takeAtLeast } from '@lib/util/takeAtLeast';
 import { PlayerSettingsWrapper } from '@components/playerSettings/playerSettingsWrapper';
+import { AppBar } from '@components/common/appBar';
 
 const loaderWrapperCss: SxProps<Theme> = {
   width: '100vw',
@@ -50,9 +51,12 @@ export const App: React.FC = observer(() => {
   }
 
   return (
-    <Box component="main" sx={mainWrapperCss}>
-      <MarkersWrapper />
-      <PlayerSettingsWrapper />
-    </Box>
+    <>
+      <AppBar />
+      <Box component="main" sx={mainWrapperCss}>
+        <MarkersWrapper />
+        <PlayerSettingsWrapper />
+      </Box>
+    </>
   )
 });

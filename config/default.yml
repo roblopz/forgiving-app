@@ -3,5 +3,9 @@ Server:
   port: 4000
   graphqlPath: '/graphql'
   address: 'http://localhost:4000'
+  jwtSecret: 'shhh'
 Client:
   port: 3000
+Auth:
+  expHours: 2
+  devAuthTokenHeader: 'X-Auth-Token'

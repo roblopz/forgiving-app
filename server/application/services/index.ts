@@ -1,4 +1,4 @@
-export * from './IPlayerService';
 export * from './playerService';
-export * from './IUserService';
 export * from './userService';
+export * from './authService';
+export * from './authService.dev';

@@ -1,12 +1,17 @@
+fragment User on User {
+  id
+  player {
+    hateLevel
+    id
+    name
+    status
+  }
+  type
+  userName 
+}
+
 mutation Login($password: String!, $username: String!) {
   user: login(password: $password, username: $username) {
-    user {
-      id
-      player {
-        id
-      }
-      type
-      userName
-    }
+    ...User 
   }
 }

@@ -1,15 +1,14 @@
 import { inject, injectable } from "inversify";
-import { Arg, FieldResolver, Mutation, Resolver, Root } from "type-graphql";
+import { Arg, Ctx, FieldResolver, Mutation, Resolver, Root } from "type-graphql";
 import { Mapper } from "@automapper/core";
 
-import { AppResolver } from "@application/core/decorators/appResolverDecorator";
+import { AppResolver } from "@applicationCore/decorators/appResolverDecorator";
 import { UserDTO } from "@application/dto/user/userDTO";
 import { IoCToken } from "@domain/core/IoCToken";
-import { IPlayerService, IUserService } from "@applicationService";
 import { AppUser, Player } from "@infraestructure/models";
 import { PlayerDTO } from "@application/dto/player";
-import { UserAuthResponse } from "@application/dto/user/userAuthResponse";
-import { getAuthToken } from "@application/core/auth";
+import { IAuthService, IPlayerService, IUserService } from "@domain/service";
+import { IGraphqlCtx } from "@application/core/graphqlCtx";
 
 @injectable()
 @Resolver(UserDTO)
@@ -18,22 +17,22 @@ export class UserResolver {
   constructor(
     @inject(IoCToken.UserService) private userService: IUserService,
     @inject(IoCToken.PlayerService) private playerService: IPlayerService,
+    @inject(IoCToken.AuthService) private authService: IAuthService,
     @inject(IoCToken.AppMapper) private mapper: Mapper
   ) {}
   
-  @Mutation(_returns => UserAuthResponse)
+  @Mutation(_returns => UserDTO)
   async login(
+    @Ctx() ctx: IGraphqlCtx,
     @Arg("username", _type => String) username: string,
     @Arg("password", _type => String) password: string
-  ): Promise<UserAuthResponse> {
+  ): Promise<UserDTO> {
     const usr = this.userService.getByUserName(username);
     if (!usr) throw new Error('Invalid');
     else if (usr.password !== password) throw new Error('Invalid');
     else {
-      const res = new UserAuthResponse();
-      res.authToken = await getAuthToken(usr);
-      res.user = this.mapper.map(usr, UserDTO, AppUser);
-      return res;
+      await this.authService.grantAuthorization(ctx.response, usr);
+      return this.mapper.map(usr, UserDTO, AppUser);
     }
   }
 

@@ -5,7 +5,7 @@ import { AppUser } from "@infraestructure/models";
 import { AppDataContext } from "@infraestructure/appDatacontext";
 import { IoCToken } from "@domain/core/IoCToken";
 import { IUserRepository } from "@domain/repository/IUserRepository";
-import { AppService } from "@application/core/decorators/appServiceDecorator";
+import { AppService } from "@applicationCore/decorators/appServiceDecorator";
 
 @injectable()
 @AppService(IoCToken.UserRepository)

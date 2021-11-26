@@ -4,6 +4,7 @@ import 'reflect-metadata';
 import './application/core/bootstrap';
 
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import http from 'http';
 import path from 'path';
 import { buildSchema, NonEmptyArray } from 'type-graphql';
@@ -13,10 +14,10 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
 
 import config from '@shared/config';
-import { AppContainer } from '@application/core/IoC/container';
-import { IGraphqlCtx } from '@application/core/graphqlCtx';
-import { authExpressMiddleware, graphqlAuthChecker } from '@application/core/auth/middleware';
+import { AppContainer } from '@applicationCore/IoC/container';
+import { IGraphqlCtx } from '@applicationCore/graphqlCtx';
 import { IoCToken } from '@domain/core/IoCToken';
+import { authExpressMiddleware, graphqlAuthChecker } from '@application/middleware';
 
 function ApolloSubscriptionServerStartPlugin(subscriptionServer: SubscriptionServer): PluginDefinition {
   return {
@@ -57,12 +58,13 @@ const graphqlPath = config.getSetting('Server.graphqlPath');
         ApolloServerPluginDrainHttpServer({ httpServer }),
         ApolloSubscriptionServerStartPlugin(subscriptionServer)
       ],
-      context: ({ req }) => {
-        const ctx: IGraphqlCtx = { user: req.user };
+      context: ({ req, res }) => {
+        const ctx: IGraphqlCtx = { user: req.user, request: req, response: res };
         return ctx;
       }
     });
 
+    app.use(cookieParser());
     app.use(authExpressMiddleware(AppContainer));
     app.use(express.static(path.resolve(__dirname, 'application/public')));
 

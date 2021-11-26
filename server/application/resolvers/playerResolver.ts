@@ -3,12 +3,12 @@ import { Arg, Authorized, Mutation, Publisher, PubSub, Query, Resolver, Root, Su
 import { Mapper } from "@automapper/core";
 
 import { IPlayerUpdatedPayload, PlayerDTO, UpdatePlayerInput } from "@application/dto/player";
-import { IPlayerService } from '@applicationService';
 import { Player } from "@infraestructure/models";
 import { IoCToken } from "@domain/core/IoCToken";
-import { AppResolver } from "@application/core/decorators/appResolverDecorator";
+import { AppResolver } from "@applicationCore/decorators/appResolverDecorator";
 import { SubscriptionTopic } from "@application/dto/subscriptionTopic";
 import { UserType } from "@domain/entities";
+import { IPlayerService } from "@domain/service";
 
 @injectable()
 @Resolver(PlayerDTO)

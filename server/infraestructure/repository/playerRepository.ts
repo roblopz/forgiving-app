@@ -5,7 +5,7 @@ import { Player } from "@infraestructure/models";
 import { IPlayerRepository } from "@domain/repository/IPlayerRepository";
 import { AppDataContext } from "@infraestructure/appDatacontext";
 import { IoCToken } from "@domain/core/IoCToken";
-import { AppService } from "@application/core/decorators/appServiceDecorator";
+import { AppService } from "@applicationCore/decorators/appServiceDecorator";
 
 @injectable()
 @AppService(IoCToken.PlayerRepository)

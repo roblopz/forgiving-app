@@ -31,7 +31,13 @@ module.exports = {
       favicon: paths.favicon,
       templateParameters: {
         NODE_ENV: settings.get('env'),
-        __HOST_URL__: settings.get('Server.address'),
+        __APP_CONFIG__: JSON.stringify({
+          env: settings.get('env'),
+          hostUrl: settings.get('Server.address'),
+          graphqlPath: settings.get('Server.graphqlPath'),
+          expHours: settings.get('Auth.expHours'),
+          devAuthTokenHeader: settings.get('Auth.devAuthTokenHeader')
+        })
       },
     }),
     new MiniCssExtractPlugin({
@@ -55,9 +61,9 @@ module.exports = {
       {
         test: /\.(js|ts)x?$/,
         exclude: /node_modules/,
-        use: { 
+        use: {
           loader: 'babel-loader',
-          options: { 
+          options: {
             root: paths.clientRoot
           }
         }
@@ -76,7 +82,7 @@ module.exports = {
               sourceMap: false,
               modules: false,
             },
-          },          
+          },
           // Compiles Sass to CSS
           "sass-loader",
           // Transform and autoprefix
@@ -87,7 +93,7 @@ module.exports = {
       { test: /\.(?:ico|gif|png|jpg|jpeg)$/i, type: 'asset/resource' },
 
       // Fonts and SVGs: Inline files
-      { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: 'asset/inline' },      
+      { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: 'asset/inline' },
     ]
   }
 };

@@ -1,11 +1,9 @@
 import { makeAutoObservable } from "mobx";
 import { Except } from 'type-fest';
 
-import { LoginMutation } from '@graphql/types';
+import { UserFragment } from '@graphql/types';
 
-type LoginUserResp = LoginMutation['user']['user'];
-
-interface ILoggedUser extends Except<LoginUserResp, '__typename'> { }
+interface ILoggedUser extends Except<UserFragment, '__typename'> { }
 
 class UserStore {
   currentUser: ILoggedUser = null;
@@ -15,7 +13,7 @@ class UserStore {
   }
 
   login(user: ILoggedUser) {
-    this.currentUser = user;
+    this.currentUser = user;    
   }
 
   logout() {

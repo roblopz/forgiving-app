@@ -1,5 +1,6 @@
+import { appConfig } from './appConfig';
 
 export function buildRoute(subpath: string) {
   if (!subpath.startsWith('/')) subpath += '/';
-  return window.__HOST_URL__ + subpath;
+  return appConfig.hostUrl + subpath;
 }

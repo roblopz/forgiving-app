@@ -1,5 +1,5 @@
 import { AppUser } from "@infraestructure/models";
-import { DtoRegisterer } from "@application/core/decorators/dtoRegistererDecorator";
+import { DtoRegisterer } from "@applicationCore/decorators/dtoRegistererDecorator";
 import { IDtoRegisterer } from "@domain/core/IDtoRegisterer";
 import { Mapper } from '@automapper/core';
 import { UserDTO } from '../user/userDTO';

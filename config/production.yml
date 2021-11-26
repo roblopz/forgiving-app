@@ -1,3 +1,5 @@
 Server:
   port: 5000
-  address: '/'
+  address: ''
+Auth:
+  - devAuthTokenHeader: ''

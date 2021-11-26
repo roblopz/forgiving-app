@@ -3,9 +3,9 @@ import { inject, injectable } from "inversify";
 import { AppUser } from "@infraestructure/models";
 import { IoCToken } from "@domain/core/IoCToken";
 import { ID } from "@domain/entities";
-import { IUserService } from "./IUserService";
 import { IUserRepository } from "@domain/repository/IUserRepository";
-import { AppService } from "@application/core/decorators/appServiceDecorator";
+import { AppService } from "@applicationCore/decorators/appServiceDecorator";
+import { IUserService } from "@domain/service";
 
 @injectable()
 @AppService(IoCToken.UserService)
