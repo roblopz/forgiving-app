@@ -20,7 +20,7 @@ export class Player implements IPlayer {
 
   @AutoMap({ typeFn: () => Number })
   @IsInt()
-  @Min(-100)
+  @Min(0)
   @Max(100)
   hateLevel: number;
 

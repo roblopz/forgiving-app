@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { injectable } from "inversify";
 
-import settings from '@shared/config';
+import settings from '@infraestructure/config';
 import { IoCToken } from "@domain/core/IoCToken";
 import { IAppUser } from "@domain/entities";
 import { IAuthService } from "@domain/service";

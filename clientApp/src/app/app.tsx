@@ -2,14 +2,15 @@ import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import PacmanLoader from "react-spinners/PacmanLoader";
 import Box from '@mui/material/Box';
-import { SxProps, Theme } from '@mui/system';
+import { SxProps } from '@mui/system';
+import { Theme } from '@mui/material/styles';
 
 import { playerStore } from '@store/playerStore';
 import { useGetAllPlayersLazyQuery } from '@graphql/types';
 import { MarkersWrapper } from '@components/markers/markersWrapper';
 import { takeAtLeast } from '@lib/util/takeAtLeast';
 import { PlayerSettingsWrapper } from '@components/playerSettings/playerSettingsWrapper';
-import { AppBar } from '@components/common/appBar';
+import { AppBar } from '@components/layout/appBar';
 
 const loaderWrapperCss: SxProps<Theme> = {
   width: '100vw',
@@ -55,7 +56,7 @@ export const App: React.FC = observer(() => {
       <AppBar />
       <Box component="main" sx={mainWrapperCss}>
         <MarkersWrapper />
-        <PlayerSettingsWrapper />
+        <PlayerSettingsWrapper sx={{ mt: 2 }} />
       </Box>
     </>
   )

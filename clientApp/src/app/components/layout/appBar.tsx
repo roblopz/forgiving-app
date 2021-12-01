@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import MuiAppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -6,10 +7,12 @@ import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 import appLogo from 'src/app/assets/images/clojure.svg';
 import { LoginDialog } from './loginDialog';
+import { userStore } from '@store/userStore';
+import { LogoutDialog } from './logoutDialog';
 
 const ElevationScroll: React.FC = (props: { children: React.ReactElement }) => {
   const { children } = props;
@@ -23,8 +26,9 @@ const ElevationScroll: React.FC = (props: { children: React.ReactElement }) => {
   });
 }
 
-export const AppBar: React.FC = () => {
-  const [loginOpen, setLoginOpen] = useState(false);  
+export const AppBar: React.FC = observer(() => {
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -35,15 +39,21 @@ export const AppBar: React.FC = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: '1rem' }}>
               PeaceApp
             </Typography>
-            <Button color="inherit" onClick={() => setLoginOpen(true)}>
-              <FontAwesomeIcon className="me-1" icon={faSignInAlt} />
-              Login
-            </Button>
+            {!userStore.isLoggedIn ?
+              <Button color="inherit" onClick={() => setLoginOpen(true)}>
+                <FontAwesomeIcon className="me-1" icon={faUserCircle} />
+                Login
+              </Button> :
+              <Button color="inherit" onClick={() => setLogoutOpen(true)}>
+                <FontAwesomeIcon className="me-1" icon={faSignOutAlt} />
+                Logout
+              </Button>}
           </Toolbar>
         </MuiAppBar>
       </ElevationScroll>
       <Toolbar />
       <LoginDialog open={loginOpen} handleClose={() => setLoginOpen(false)} />
-    </Box>
+      <LogoutDialog open={logoutOpen} handleClose={() => setLogoutOpen(false)} />
+    </Box >
   );
-}
+});

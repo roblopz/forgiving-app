@@ -6,14 +6,14 @@ import { Player, AppUser } from "./models";
 const players: Player[] = [{
   id: '6c84fb90-12c4-11e1-840d-7b25c5ee775a',
   name: 'Hector',
-  hateLevel: 20,
+  hateLevel: 70,
   status: PlayerStatus.WAR,
   imagePath: '/images/sama.jpg'
 }, {
   id: '110ec58a-a0f2-4ac4-8393-c866d813b8d1',
   name: 'Gustavo',
-  hateLevel: 50,
-  status: PlayerStatus.WAR,
+  hateLevel: 100,
+  status: PlayerStatus.PEACE,
   imagePath: '/images/chavo.jpg'
 }];
 

@@ -1,7 +1,7 @@
 
 export {};
 
-type Config = import('../shared/config/index').Config;
+type Config = import('../server/infraestructure/config/index').Config;
 
 declare global {
   type AppGlobalConfig = Pick<Config, 'env'> & 

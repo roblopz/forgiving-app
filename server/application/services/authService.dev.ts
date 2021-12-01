@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import { Request, Response } from "express";
 
-import settings from '@shared/config';
+import settings from '@infraestructure/config';
 import { IAppUser } from "@domain/entities";
 import { IAuthService } from "@domain/service";
 import { AppService } from "@application/core/decorators/appServiceDecorator";
@@ -23,7 +23,6 @@ export class DevAuthService implements IAuthService {
       if (authToken?.length) {
         const [authPayload] = await verify<IAppUser>(authToken, this.jwtSecret);
         if (authPayload) {
-          console.log(authPayload);
           return authPayload;
         } else if (throwOnJwtError) {
           throw new Error('Invalid auth token');

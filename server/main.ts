@@ -13,7 +13,7 @@ import { ApolloServerPluginDrainHttpServer, PluginDefinition } from 'apollo-serv
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
 
-import config from '@shared/config';
+import config from '@infraestructure/config';
 import { AppContainer } from '@applicationCore/IoC/container';
 import { IGraphqlCtx } from '@applicationCore/graphqlCtx';
 import { IoCToken } from '@domain/core/IoCToken';

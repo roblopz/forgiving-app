@@ -1,87 +1,44 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import { SxProps, Theme } from '@mui/system';
-import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
+import { Box, Typography, Grid } from '@mui/material';
+import { SxProps } from '@mui/system';
+import { Theme } from '@mui/material/styles';
 import { observer } from 'mobx-react-lite';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHourglassHalf, faThermometerThreeQuarters } from '@fortawesome/free-solid-svg-icons'
-import { faSith } from '@fortawesome/free-brands-svg-icons';
 
-import { HateSlider } from '@components/hateSlider/hateSlider';
+import { makeSxProps } from '@lib/util/muiUtil';
+import { playerStore } from '@store/playerStore';
+import { StatusMarker } from './statusMarker';
+import { TimeRemainingMarker } from './timeRemainingMarker';
+import { HateMarker } from './hateMarker';
 
 export interface IMarkersWrapperProps {
   sx?: SxProps<Theme>;
 }
 
-const smallTitleSx: SxProps<Theme> = {
-  fontSize: '.8rem'
-};
-
-const smallCaptionSx: SxProps<Theme> = {
-  fontSize: '.65rem'
+const styles = {
+  paperMarker: makeSxProps({
+    display: 'flex',
+    alignItems: 'center',
+    padding: 2,
+    minHeight: 78
+  })
 };
 
 export const MarkersWrapper: React.FC<IMarkersWrapperProps> = observer(({ sx }) => {
   return (
     <Box sx={sx}>
-      <Typography fontWeight="500" variant="caption" sx={{ marginLeft: 1 }}>RESUMEN:</Typography>
+      <Typography fontWeight="500" variant="caption" sx={{ marginLeft: 1 }}>RESUMEN</Typography>
+
       <Grid sx={{ marginTop: 0 }} container spacing={1}>
-        <Grid item xs={5} sm lg>
-          <Paper sx={{
-            padding: 2,
-            display: 'flex'
-          }}>
-            <Box sx={{ marginRight: 1.5 }}>
-              <Avatar sizes="" sx={{ bgcolor: '#d81b60', width: 36, height: 36 }}>
-                <FontAwesomeIcon icon={faSith} />
-              </Avatar>
-            </Box>
-            <Box>
-              <Typography sx={smallTitleSx} variant="subtitle2">Status:</Typography>
-              <Typography sx={smallCaptionSx} variant="caption">EN RIÑA</Typography>
-            </Box>
-          </Paper>
+        <Grid item xs={6} sm lg>
+          <StatusMarker status={playerStore.overallStatus} sx={styles.paperMarker} />
         </Grid>
 
-        <Grid item xs={7} sm lg>
-          <Paper sx={{
-            padding: 2,
-            display: 'flex'
-          }}>
-            <Box sx={{ marginRight: 1.5 }}>
-              <Avatar sizes="" sx={{ bgcolor: '#cddc39', width: 36, height: 36 }}>
-                <FontAwesomeIcon size="xs" icon={faHourglassHalf} />
-              </Avatar>
-            </Box>
-            <Box>
-              <Typography sx={smallTitleSx} variant="subtitle2">En disputa:</Typography>
-              <Typography sx={smallCaptionSx} variant="caption">23d 18h:47m:23s</Typography>
-            </Box>
-          </Paper>
+        <Grid item xs={6} sm lg>
+          <TimeRemainingMarker sx={styles.paperMarker} />         
         </Grid>
 
         <Grid item xs={12} sm={12} lg>
-          <Paper sx={{
-            padding: 2,
-            display: 'flex'
-          }}>
-            <Box sx={{ marginRight: 1.5 }}>
-              <Avatar sizes="" sx={{ bgcolor: '#ff9800', width: 39, height: 39 }}>
-                <FontAwesomeIcon icon={faThermometerThreeQuarters} />
-              </Avatar>
-            </Box>
-            <Box sx={{ flexGrow: 1, position: 'relative', minHeight: 44 }}>
-              <Typography sx={smallTitleSx} variant="subtitle2">Odiométro:</Typography>
-              <HateSlider value={0} sxWrapper={{
-                position: 'absolute',
-                top: 12,
-                width: '100%'
-              }} />
-            </Box>
-          </Paper>
+          <HateMarker averageHate={playerStore.averageHate} sx={styles.paperMarker} />
         </Grid>
       </Grid>
     </Box>

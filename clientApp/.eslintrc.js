@@ -13,7 +13,15 @@ module.exports = {
       experimentalObjectRestSpread: true
     }
   },
-  ignorePatterns: ['tools/**', '.eslintrc.js', 'babel.config.js', 'postcss.config.js'],
+  ignorePatterns: [
+    'tools/**', 
+    '.eslintrc.js', 
+    'babel.config.js', 
+    'postcss.config.js',
+    '**/node_modules/**',
+    '*.json',
+    '**/*.json'
+  ],
   extends: [
     "eslint:recommended",
     "plugin:react/recommended"

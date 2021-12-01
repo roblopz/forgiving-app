@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import { SxProps, Theme } from '@mui/system';
+import { SxProps } from '@mui/system';
+import { Theme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { observer } from 'mobx-react-lite';
@@ -15,7 +16,7 @@ export interface ISpecificsWrapper {
 export const PlayerSettingsWrapper: React.FC<ISpecificsWrapper> = observer(({ sx }) => {
   return (
     <Box sx={sx}>
-      <Typography fontWeight="500" variant="caption" sx={{ marginLeft: 1 }}>CONTRINCANTES:</Typography>      
+      <Typography fontWeight="500" variant="caption" sx={{ marginLeft: 1 }}>CONTRINCANTES</Typography>      
 
       <Grid sx={{ marginTop: .25 }} container spacing={1}>
         {playerStore.players.map((player) => (

@@ -17,6 +17,6 @@ export class UserService implements IUserService {
   }
 
   getByUserName(username: string): AppUser {
-    return this.userRepository.getAll().find(x => x.userName === username);
+    return this.userRepository.getAll().find(x => x.userName.toLowerCase() === username.toLowerCase());
   }
 }

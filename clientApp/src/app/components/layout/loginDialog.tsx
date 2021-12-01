@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useEffect, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
@@ -12,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle, faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import { useLoginMutation } from '@graphql/types';
+import { userStore } from '@store/userStore';
 
 interface ILoginData {
   username: string;
@@ -50,7 +50,15 @@ export const LoginDialog: React.FC<ILoginDialogProps> = ({ open, handleClose }) 
   const onClose = useCallback(() => {
     if (!loading) {
       handleClose();
-      setTimeout(reset, 350);
+      
+      // Appbar button takes focus on dialog form submit...
+      if ((document.activeElement as HTMLElement)?.blur)
+      (document.activeElement as HTMLElement).blur();
+              
+      setTimeout(() => {
+        reset();
+        resetLoading();
+      }, 350);
     }
   }, [reset, handleClose, loading]);
 
@@ -60,7 +68,8 @@ export const LoginDialog: React.FC<ILoginDialogProps> = ({ open, handleClose }) 
         variables: { username: data.username, password: data.password }
       });
 
-      console.log(loginRes?.user);
+      userStore.login(loginRes.user);
+      onClose();
     } catch (err) {
       resetLoading();
       setLoginError('Usuario/contraseña inválido');
@@ -68,7 +77,8 @@ export const LoginDialog: React.FC<ILoginDialogProps> = ({ open, handleClose }) 
   }) as SubmitHandler<ILoginData>);
 
   return (
-    <Dialog open={open} onClose={onClose}
+    <Dialog open={open} 
+      onClose={onClose}
       PaperProps={{ sx: { maxWidth: 340, p: 3, position: 'relative' } }}>
       <Box component="form" onSubmit={onSubmit}>
         <Grid container spacing={1}>

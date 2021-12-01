@@ -1,7 +1,7 @@
 import _config from 'config';
 
-import { NestedValueOf, Paths } from '../util/typeUtil';
-import { Config } from '../../config/definition';
+import { NestedValueOf, Paths } from '../../../shared/typeUtil';
+import { Config } from '../../../config/definition';
 
 function getSetting<S extends Paths<Config>>(setting: S): NestedValueOf<Config, S> {
   return _config.get(setting);
