@@ -1,7 +1,16 @@
 import { makeAutoObservable } from "mobx";
 import { Except } from 'type-fest';
+import { debounce } from 'lodash';
 
-import { PlayerFragment, PlayerStatus } from "@graphql/types";
+import { 
+  PlayerFragment, 
+  PlayerStatus, 
+  UpdatePlayerDocument, 
+  UpdatePlayerInput, 
+  UpdatePlayerMutationVariables 
+} from "@graphql/types";
+
+import { client } from '@graphql/client';
 import { userStore } from './userStore';
 
 interface PlayerVMClass extends Except<PlayerFragment, '__typename'> {
@@ -65,6 +74,7 @@ export class PlayerVM implements PlayerVMClass {
     public imagePath?: string
   ) {
     makeAutoObservable(this);
+    this.updatePlayer = debounce(this.updatePlayer.bind(this), 500);
   }
 
   get canEdit() {
@@ -76,11 +86,35 @@ export class PlayerVM implements PlayerVMClass {
   }
 
   setStatus(status: PlayerStatus) {
-    this.status = status;
+    if (this.canEdit) {
+      this.status = status;
+      this.updatePlayer();
+    }
   }
 
-  setHateLevel(hateLevel: number) {
-    this.hateLevel = hateLevel;
+  async setHateLevel(hateLevel: number) {
+    if (this.canEdit) {
+      this.hateLevel = hateLevel;
+      this.updatePlayer();      
+    }
+  }
+
+  private async updatePlayer() {
+    try {
+      await client.mutate<UpdatePlayerInput, UpdatePlayerMutationVariables>({
+        mutation: UpdatePlayerDocument,
+        variables: {
+          input: {
+            hateLevel: this.hateLevel,
+            id: this.id,
+            status: this.status
+          }
+        }
+      });  
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+    }
   }
 }
 

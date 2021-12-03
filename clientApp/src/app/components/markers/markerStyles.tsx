@@ -1,18 +1,18 @@
-import { makeSxProps } from "@lib/util/muiUtil";
+import { createStyles } from "@lib/util/muiUtil";
 
-export const markerStyles = {
-  markerCardTitle: makeSxProps({
+export const markerStyles = createStyles({
+  markerCardTitle: {
     fontSize: '.8rem'
-  }),
-  markerCardCaption: makeSxProps({
+  },
+  markerCardCaption: {
     fontSize: '.65rem'
-  }),
-  avatar: makeSxProps({
+  },
+  avatar: {
     width: 36,
     height: 36
-  }),
-  avatarLg: makeSxProps({
+  },
+  avatarLg: {
     width: 39, 
     height: 39
-  })
-};
+  }
+});

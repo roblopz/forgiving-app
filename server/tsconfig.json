@@ -22,7 +22,8 @@
       "@applicationService": ["application/services/index"],
       "@applicationCore/*": ["application/core/*"],
       "@domain/*": ["domain/*"],
-      "@infraestructure/*": ["infraestructure/*"]
-    }    
+      "@infraestructure/*": ["infraestructure/*"],
+      "@common/*": ["../common/*"]
+    }
   }
 }

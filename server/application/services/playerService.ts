@@ -6,6 +6,7 @@ import { IoCToken } from "@domain/core/IoCToken";
 import { ID } from "@domain/entities";
 import { AppService } from "@applicationCore/decorators/appServiceDecorator";
 import { IPlayerData, IPlayerService } from "@domain/service";
+import { AppValidationError } from "@common/validation/errors";
 
 @injectable()
 @AppService(IoCToken.PlayerService)
@@ -22,7 +23,7 @@ export class PlayerService implements IPlayerService {
 
   updatePlayerData(id: ID, playerData: IPlayerData): Player {
     const target = this.playerRepository.get(id);
-    if (!target) throw new Error(`Player with id[${id}] not found`);
+    if (!target) throw new AppValidationError(`Player with id[${id}] not found`);
 
     target.status = playerData.status;
     target.hateLevel = playerData.hateLevel;

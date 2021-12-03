@@ -13,7 +13,7 @@ import { blue, red, blueGrey, lightBlue, amber, cyan, deepOrange } from '@mui/ma
 import { SxProps } from '@mui/system';
 import { Theme } from '@mui/material/styles';
 
-import { HateProgress } from '@components/shared/hateProgress';
+import { HateProgress } from '@components/shared/players/hateProgress';
 import { getHateLevelEnum, HateLevelEnum, hateLevelTranslation } from '@store/playerStore';
 import { markerStyles } from './markerStyles';
 

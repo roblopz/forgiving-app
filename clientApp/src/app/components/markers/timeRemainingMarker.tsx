@@ -16,10 +16,10 @@ export const TimeRemainingMarker: React.FC<ITimeRemainingMarkerProps> = observer
   return (
     <Paper sx={sx}>
       <Box sx={{ marginRight: 1.5, position: 'relative' }}>
-        <Avatar sx={{ 
+        <Avatar sx={{
           ...markerStyles.avatar, 
           bgcolor: deepPurple[500],
-          transform: 'translateY(-4px)'
+          transform: 'translateY(-8px)'
         }}>
           <QueryBuilder />
         </Avatar>
@@ -27,7 +27,7 @@ export const TimeRemainingMarker: React.FC<ITimeRemainingMarkerProps> = observer
           ...markerStyles.markerCardCaption, 
           fontWeight: 500,
           position: 'absolute',
-          transform: 'translateX(50%)'
+          transform: 'translateX(50%) translateY(-8px)'
         }} variant="caption">
           23d
         </Typography>

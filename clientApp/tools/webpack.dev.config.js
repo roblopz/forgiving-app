@@ -6,7 +6,9 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
+process.env["NODE_CONFIG_DIR"] = path.resolve(__dirname, '../../common/config');
 const settings = require('config');
+
 const paths = require('./paths');
 const tsConfigPath = path.resolve(paths.clientRoot, 'tsconfig.json');
 

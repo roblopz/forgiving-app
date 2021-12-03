@@ -7,7 +7,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Launch Server",
       "program": "${workspaceFolder}/server/main.ts",
       "preLaunchTask": "build-server",
       "outFiles": ["${workspaceFolder}/build/**/*.js"]

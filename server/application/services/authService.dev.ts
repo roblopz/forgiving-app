@@ -7,6 +7,7 @@ import { IAuthService } from "@domain/service";
 import { AppService } from "@application/core/decorators/appServiceDecorator";
 import { IoCToken } from "@domain/core/IoCToken";
 import { verify, getAuthToken } from "@application/core/auth";
+import { AppAuthError, AppError } from "@common/validation/errors";
 
 @injectable()
 @AppService(IoCToken.AuthService, () => settings.getSetting('env') !== "production")
@@ -25,7 +26,7 @@ export class DevAuthService implements IAuthService {
         if (authPayload) {
           return authPayload;
         } else if (throwOnJwtError) {
-          throw new Error('Invalid auth token');
+          throw new AppAuthError('Invalid authorization token');
         }
       }
     }
@@ -33,7 +34,7 @@ export class DevAuthService implements IAuthService {
 
   async grantAuthorization(response: Response, user: IAppUser): Promise<void> {
     if (!user) 
-      throw new Error('User argument not provided');
+      throw new AppError('User argument not provided');
 
     const authToken = await getAuthToken(user, this.jwtSecret, {
       expiresIn: this.authExpirationSeconds

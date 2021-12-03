@@ -93,6 +93,13 @@ export type OnPlayerUpdatedSubscriptionVariables = Exact<{ [key: string]: never;
 
 export type OnPlayerUpdatedSubscription = { __typename?: 'Subscription', player: { __typename?: 'Player', id: string, name: string, hateLevel: number, status: PlayerStatus, imagePath?: string | null | undefined } };
 
+export type UpdatePlayerMutationVariables = Exact<{
+  input: UpdatePlayerInput;
+}>;
+
+
+export type UpdatePlayerMutation = { __typename?: 'Mutation', updated: { __typename?: 'Player', id: string, name: string, hateLevel: number, status: PlayerStatus, imagePath?: string | null | undefined } };
+
 export type UserFragment = { __typename?: 'User', id: string, type: UserType, userName: string, player?: { __typename?: 'Player', hateLevel: number, id: string, name: string, status: PlayerStatus } | null | undefined };
 
 export type LoginMutationVariables = Exact<{
@@ -188,6 +195,39 @@ export function useOnPlayerUpdatedSubscription(baseOptions?: Apollo.Subscription
       }
 export type OnPlayerUpdatedSubscriptionHookResult = ReturnType<typeof useOnPlayerUpdatedSubscription>;
 export type OnPlayerUpdatedSubscriptionResult = Apollo.SubscriptionResult<OnPlayerUpdatedSubscription>;
+export const UpdatePlayerDocument = gql`
+    mutation UpdatePlayer($input: UpdatePlayerInput!) {
+  updated: updatePlayer(input: $input) {
+    ...Player
+  }
+}
+    ${PlayerFragmentDoc}`;
+export type UpdatePlayerMutationFn = Apollo.MutationFunction<UpdatePlayerMutation, UpdatePlayerMutationVariables>;
+
+/**
+ * __useUpdatePlayerMutation__
+ *
+ * To run a mutation, you first call `useUpdatePlayerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePlayerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePlayerMutation, { data, loading, error }] = useUpdatePlayerMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdatePlayerMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePlayerMutation, UpdatePlayerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePlayerMutation, UpdatePlayerMutationVariables>(UpdatePlayerDocument, options);
+      }
+export type UpdatePlayerMutationHookResult = ReturnType<typeof useUpdatePlayerMutation>;
+export type UpdatePlayerMutationResult = Apollo.MutationResult<UpdatePlayerMutation>;
+export type UpdatePlayerMutationOptions = Apollo.BaseMutationOptions<UpdatePlayerMutation, UpdatePlayerMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($password: String!, $username: String!) {
   user: login(password: $password, username: $username) {

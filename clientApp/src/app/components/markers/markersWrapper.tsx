@@ -4,7 +4,7 @@ import { SxProps } from '@mui/system';
 import { Theme } from '@mui/material/styles';
 import { observer } from 'mobx-react-lite';
 
-import { makeSxProps } from '@lib/util/muiUtil';
+import { createStyles } from '@lib/util/muiUtil';
 import { playerStore } from '@store/playerStore';
 import { StatusMarker } from './statusMarker';
 import { TimeRemainingMarker } from './timeRemainingMarker';
@@ -14,14 +14,14 @@ export interface IMarkersWrapperProps {
   sx?: SxProps<Theme>;
 }
 
-const styles = {
-  paperMarker: makeSxProps({
+const styles = createStyles({
+  paperMarker: {
     display: 'flex',
     alignItems: 'center',
     padding: 2,
     minHeight: 78
-  })
-};
+  }
+});
 
 export const MarkersWrapper: React.FC<IMarkersWrapperProps> = observer(({ sx }) => {
   return (

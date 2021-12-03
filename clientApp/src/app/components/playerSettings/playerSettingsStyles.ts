@@ -1,8 +1,8 @@
-import { makeSxProps } from "@lib/util/muiUtil";
+import { createStyles } from "@lib/util/muiUtil";
 
-export const playerSettingsStyles = {
-  captionWithIcon: makeSxProps({
+export const playerSettingsStyles = createStyles({
+  captionWithIcon: {
     display: 'flex',
     alignItems: 'center'
-  })
-};
+  }
+});

@@ -1,22 +1,5 @@
-import { orange } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
-declare module '@mui/material/styles' {
-  interface Theme {
-    status: {
-      danger: string;
-    };
-  }
-  // allow configuration using `createTheme`
-  interface ThemeOptions {
-    status?: {
-      danger?: string;
-    };
-  }
-}
+declare module '@mui/material/styles' { }
 
-export const appTheme = createTheme({
-  status: {
-    danger: orange[500],
-  }
-});
+export const appTheme = createTheme();

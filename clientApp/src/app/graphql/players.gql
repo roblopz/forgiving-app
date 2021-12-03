@@ -17,3 +17,9 @@ subscription OnPlayerUpdated {
     ...Player
   }
 }
+
+mutation UpdatePlayer($input: UpdatePlayerInput!) {
+  updated: updatePlayer(input: $input) {
+    ...Player
+  }
+}

@@ -8,7 +8,8 @@ import { IoCToken } from "@domain/core/IoCToken";
 import { AppUser, Player } from "@infraestructure/models";
 import { PlayerDTO } from "@application/dto/player";
 import { IAuthService, IPlayerService, IUserService } from "@domain/service";
-import { IGraphqlCtx } from "@application/core/graphqlCtx";
+import { IGraphqlCtx } from "@application/core/graphql/graphqlCtx";
+import { AppValidationError } from "@common/validation/errors";
 
 @injectable()
 @Resolver(UserDTO)
@@ -28,8 +29,13 @@ export class UserResolver {
     @Arg("password", _type => String) password: string
   ): Promise<UserDTO> {
     const usr = this.userService.getByUserName(username);
-    if (!usr) throw new Error('Invalid');
-    else if (usr.password !== password) throw new Error('Invalid');
+    const invalidError = new AppValidationError('Invalid username/password', {
+      username: 'Invalid username/password',
+      password: 'Invalid username/password'
+    });
+
+    if (!usr) throw invalidError;
+    else if (usr.password !== password) throw invalidError;
     else {
       await this.authService.grantAuthorization(ctx.response, usr);
       return this.mapper.map(usr, UserDTO, AppUser);

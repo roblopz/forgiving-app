@@ -18,7 +18,7 @@ import { red, blueGrey, blue, grey, pink } from '@mui/material/colors';
 import { PlayerVM, hateLevelTranslation, HateLevelEnum } from '@store/playerStore';
 import { HateSlider } from './hateSlider';
 import { observer } from 'mobx-react-lite';
-import { HateProgress } from '@components/shared/hateProgress';
+import { HateProgress } from '@components/shared/players/hateProgress';
 import { playerSettingsStyles } from './playerSettingsStyles';
 
 export interface IPlayerHateProps {

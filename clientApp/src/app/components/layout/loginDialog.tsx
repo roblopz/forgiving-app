@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -10,15 +10,11 @@ import * as yup from "yup";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle, faSpinner } from '@fortawesome/free-solid-svg-icons'
 
-import { useLoginMutation } from '@graphql/types';
+import { LoginMutationVariables, useLoginMutation } from '@graphql/types';
 import { userStore } from '@store/userStore';
+import { handleError } from '@lib/errors/errorHandling';
 
-interface ILoginData {
-  username: string;
-  password: string;
-}
-
-const loginSchema: yup.SchemaOf<ILoginData> = yup.object({
+const loginSchema: yup.SchemaOf<LoginMutationVariables> = yup.object({
   username: yup.string().required('Este campo es requerido'),
   password: yup.string().required('Este campo es requerido')
 }).required();
@@ -29,11 +25,12 @@ export interface ILoginDialogProps {
 }
 
 export const LoginDialog: React.FC<ILoginDialogProps> = ({ open, handleClose }) => {
+  const isClosingRef = useRef(false);
   const [loginError, setLoginError] = useState<string>(null);
   const [login, { loading, reset: resetLoading }] = useLoginMutation();
 
-  const { control, handleSubmit, reset, watch } = useForm<ILoginData>({
-    mode: 'onBlur',
+  const { control, handleSubmit, reset, watch } = useForm<LoginMutationVariables>({
+    mode: 'onSubmit',
     defaultValues: { username: '', password: '' },
     resolver: yupResolver(loginSchema)
   });
@@ -48,19 +45,19 @@ export const LoginDialog: React.FC<ILoginDialogProps> = ({ open, handleClose }) 
   }, [loginError]);
 
   const onClose = useCallback(() => {
-    if (!loading) {
+    if (!loading) {      
       handleClose();
-      
-      // Appbar button takes focus on dialog form submit...
+
+      // AppBar button takes focus on dialog form submit...
       if ((document.activeElement as HTMLElement)?.blur)
       (document.activeElement as HTMLElement).blur();
-              
-      setTimeout(() => {
-        reset();
-        resetLoading();
-      }, 350);
     }
   }, [reset, handleClose, loading]);
+
+  const onClosed = useCallback(() => {
+    reset();
+    resetLoading();
+  }, [reset, resetLoading]);
 
   const onSubmit = handleSubmit((async (data) => {
     try {
@@ -71,13 +68,19 @@ export const LoginDialog: React.FC<ILoginDialogProps> = ({ open, handleClose }) 
       userStore.login(loginRes.user);
       onClose();
     } catch (err) {
+      handleError(err, {
+        handleValidationError: () => {          
+          setLoginError('Usuario/contraseña inválido');
+        }
+      });
+    } finally {    
       resetLoading();
-      setLoginError('Usuario/contraseña inválido');
     }
-  }) as SubmitHandler<ILoginData>);
+  }) as SubmitHandler<LoginMutationVariables>);  
 
   return (
-    <Dialog open={open} 
+    <Dialog open={open}
+      TransitionProps={{ onExited: onClosed }}
       onClose={onClose}
       PaperProps={{ sx: { maxWidth: 340, p: 3, position: 'relative' } }}>
       <Box component="form" onSubmit={onSubmit}>
@@ -98,8 +101,8 @@ export const LoginDialog: React.FC<ILoginDialogProps> = ({ open, handleClose }) 
               render={({ field, fieldState }) => (
                 <TextField fullWidth label="Usuario" value={field.value || ''}
                   onChange={field.onChange} onBlur={field.onBlur} autoFocus
-                  error={fieldState.invalid && fieldState.isTouched}
-                  helperText={fieldState.error?.message}
+                  error={!isClosingRef.current && fieldState.invalid && fieldState.isTouched}
+                  helperText={!isClosingRef.current && fieldState.error?.message}
                   variant="standard"
                   size="small"
                   InputProps={{ readOnly: loading }} />
@@ -110,15 +113,16 @@ export const LoginDialog: React.FC<ILoginDialogProps> = ({ open, handleClose }) 
               render={({ field, fieldState }) => (
                 <TextField fullWidth label="Contraseña" value={field.value || ''}
                   onChange={field.onChange} onBlur={field.onBlur}
-                  error={fieldState.invalid && fieldState.isTouched}
-                  helperText={fieldState.error?.message}
+                  error={!isClosingRef.current && fieldState.invalid && fieldState.isTouched}
+                  helperText={!isClosingRef.current && fieldState.error?.message}
                   variant="standard"
                   size="small"
                   InputProps={{ readOnly: loading }} />
               )} />
           </Grid>
           <Grid item xs={12}>
-            <Button type="submit" disabled={loading}
+            <Button type="submit" 
+              disabled={loading}
               color="primary"
               variant="contained"
               className="w-100 mt-3">

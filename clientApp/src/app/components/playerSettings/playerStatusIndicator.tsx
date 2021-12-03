@@ -12,7 +12,7 @@ import { SportsMma, SportsKabaddi } from '@mui/icons-material';
 import { PlayerVM } from '@store/playerStore';
 import { PlayerStatus } from '@graphql/types';
 import { playerSettingsStyles } from './playerSettingsStyles';
-import { InfoButton } from '@components/shared/styledButtons';
+import { InfoButton } from '@components/shared/uiElements/styledButtons';
 
 export interface IPlayerStatusIndicatorProps {
   player: PlayerVM;

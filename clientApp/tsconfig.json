@@ -26,8 +26,8 @@
       "@store/*": ["src/app/store/*"],
       "@lib/*": ["src/app/lib/*"],
       "@assets/*": ["src/app/assets"],
-      "@shared/*": ["../shared/*"],
-      "@hooks/*": ["src/app/hooks/*"]
+      "@common/*": ["../common/*"],
+      "@hooks/*": ["src/app/hooks/*"]      
     }
   },
   "exclude": [

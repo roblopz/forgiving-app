@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import MuiAppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -21,9 +21,7 @@ const ElevationScroll: React.FC = (props: { children: React.ReactElement }) => {
     threshold: 0
   });
 
-  return React.cloneElement(children, {
-    elevation: trigger ? 4 : 0,
-  });
+  return React.cloneElement(children, { elevation: trigger ? 4 : 0 });
 }
 
 export const AppBar: React.FC = observer(() => {
@@ -41,17 +39,16 @@ export const AppBar: React.FC = observer(() => {
             </Typography>
             {!userStore.isLoggedIn ?
               <Button color="inherit" onClick={() => setLoginOpen(true)}>
-                <FontAwesomeIcon className="me-1" icon={faUserCircle} />
-                Login
+                <FontAwesomeIcon className="me-1" icon={faUserCircle} /> Login
               </Button> :
               <Button color="inherit" onClick={() => setLogoutOpen(true)}>
-                <FontAwesomeIcon className="me-1" icon={faSignOutAlt} />
-                Logout
+                <FontAwesomeIcon className="me-1" icon={faSignOutAlt} /> Logout
               </Button>}
           </Toolbar>
         </MuiAppBar>
       </ElevationScroll>
       <Toolbar />
+
       <LoginDialog open={loginOpen} handleClose={() => setLoginOpen(false)} />
       <LogoutDialog open={logoutOpen} handleClose={() => setLogoutOpen(false)} />
     </Box >

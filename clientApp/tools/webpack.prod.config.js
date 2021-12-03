@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
+process.env["NODE_CONFIG_DIR"] = path.resolve(__dirname, '../../common/config');
 const settings = require('config');
 const paths = require('./paths');
 const tsConfigPath = path.resolve(paths.clientRoot, 'tsconfig.json');

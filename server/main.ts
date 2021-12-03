@@ -15,9 +15,10 @@ import { execute, subscribe } from 'graphql';
 
 import config from '@infraestructure/config';
 import { AppContainer } from '@applicationCore/IoC/container';
-import { IGraphqlCtx } from '@applicationCore/graphqlCtx';
+import { IGraphqlCtx } from '@application/core/graphql/graphqlCtx';
 import { IoCToken } from '@domain/core/IoCToken';
 import { authExpressMiddleware, graphqlAuthChecker } from '@application/middleware';
+import { errorFormatter } from '@application/core/graphql/formatError';
 
 function ApolloSubscriptionServerStartPlugin(subscriptionServer: SubscriptionServer): PluginDefinition {
   return {
@@ -61,7 +62,8 @@ const graphqlPath = config.getSetting('Server.graphqlPath');
       context: ({ req, res }) => {
         const ctx: IGraphqlCtx = { user: req.user, request: req, response: res };
         return ctx;
-      }
+      },
+      formatError: errorFormatter
     });
 
     app.use(cookieParser());

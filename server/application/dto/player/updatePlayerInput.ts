@@ -15,6 +15,6 @@ export class UpdatePlayerInput {
   @Field(_type => Number)
   @IsInt()
   @Min(0)
-  @Max(50)
+  @Max(100)
   hateLevel: number;
 }

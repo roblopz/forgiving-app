@@ -32,16 +32,21 @@ export function RepositoryFactory<TEntity extends IEntity>(type: new() => TEntit
       return this.cloneObject(object);
     }
   
-    update(object: TEntity): TEntity {
-      const target = this.get(object.id);
-      this.set.splice(this.set.indexOf(target), 1, object);
+    update(object: TEntity): TEntity {      
+      const targetIdx = this.set.findIndex(x => x.id == object.id)
+      if (targetIdx === -1)
+        throw new Error('Object not found');
+
+      this.set.splice(targetIdx, 1, object);
       return this.cloneObject(object);
     }
   
     delete(id: ID): void {
-      const target = this.get(id);
-      if (target)
-        this.set.splice(this.set.indexOf(target), 1);
+      const targetIdx = this.set.findIndex(x => x.id == id)
+      if (targetIdx === -1)
+        throw new Error('Object not found');
+
+      this.set.splice(targetIdx, 1);
     }
 
     private cloneObject(obj: TEntity): TEntity {
