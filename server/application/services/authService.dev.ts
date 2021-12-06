@@ -22,11 +22,11 @@ export class DevAuthService implements IAuthService {
     if (request.headers.authorization && request.headers.authorization.split(' ')[0] === 'Bearer') {
       const authToken = request.headers.authorization.split(' ')[1];      
       if (authToken?.length) {
-        const [authPayload] = await verify<IAppUser>(authToken, this.jwtSecret);
+        const [authPayload, err] = await verify<IAppUser>(authToken, this.jwtSecret);
         if (authPayload) {
           return authPayload;
         } else if (throwOnJwtError) {
-          throw new AppAuthError('Invalid authorization token');
+          throw new AppAuthError(err?.message || 'No auth', null, false, err || new Error('Could not verify auth token'));
         }
       }
     }

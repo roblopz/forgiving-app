@@ -1,4 +1,4 @@
-fragment User on User {
+fragment User on UserDTO {
   id
   player {
     hateLevel

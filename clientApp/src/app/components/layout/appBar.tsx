@@ -6,10 +6,10 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 import appLogo from 'src/app/assets/images/clojure.svg';
+import { FontAwesomeIcon } from '@components/shared/uiElements/styledFontAwesomeIcon';
 import { LoginDialog } from './loginDialog';
 import { userStore } from '@store/userStore';
 import { LogoutDialog } from './logoutDialog';
@@ -30,7 +30,7 @@ export const AppBar: React.FC = observer(() => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <ElevationScroll>
+      <ElevationScroll>        
         <MuiAppBar position="fixed">
           <Toolbar>
             <Box sx={{ maxHeight: 32, mr: 1 }} component="img" src={appLogo} />
@@ -39,10 +39,10 @@ export const AppBar: React.FC = observer(() => {
             </Typography>
             {!userStore.isLoggedIn ?
               <Button color="inherit" onClick={() => setLoginOpen(true)}>
-                <FontAwesomeIcon className="me-1" icon={faUserCircle} /> Login
+                <FontAwesomeIcon sx={{ mr: .5 }} icon={faUserCircle} /> Login
               </Button> :
               <Button color="inherit" onClick={() => setLogoutOpen(true)}>
-                <FontAwesomeIcon className="me-1" icon={faSignOutAlt} /> Logout
+                <FontAwesomeIcon sx={{ mr: .5 }} icon={faSignOutAlt} /> Logout
               </Button>}
           </Toolbar>
         </MuiAppBar>

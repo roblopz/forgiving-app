@@ -13,7 +13,7 @@ query GetAllPlayers {
 }
 
 subscription OnPlayerUpdated {
-  player: onPlayerUpdated {
+  updatedPlayer: onPlayerUpdated {
     ...Player
   }
 }

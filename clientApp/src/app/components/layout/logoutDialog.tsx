@@ -32,14 +32,14 @@ export const LogoutDialog: React.FC<ILoginDialogProps> = ({ open, handleClose })
         display: 'flex',
         flexDirection: 'column'        
       }}>
-        <Button className="w-100"
+        <Button sx={{ width: '100%' }}
           size="small"
           variant="contained"
           color="warning"
           onClick={onLogout}>
           Logout
         </Button>
-        <Button className="w-100 mt-3"
+        <Button sx={{ width: '100%', mt: 2 }}
           size="small"
           variant="contained"
           color="primary"

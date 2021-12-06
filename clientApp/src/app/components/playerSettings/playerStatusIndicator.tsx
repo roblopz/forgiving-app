@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite';
 import { SxProps } from '@mui/system';
 import { Theme } from '@mui/material/styles';
 import { Typography, Box, Button } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDove } from '@fortawesome/free-solid-svg-icons';
 import { blue, indigo } from '@mui/material/colors';
 import { SportsMma, SportsKabaddi } from '@mui/icons-material';
@@ -13,6 +12,7 @@ import { PlayerVM } from '@store/playerStore';
 import { PlayerStatus } from '@graphql/types';
 import { playerSettingsStyles } from './playerSettingsStyles';
 import { InfoButton } from '@components/shared/uiElements/styledButtons';
+import { FontAwesomeIcon } from '@components/shared/uiElements/styledFontAwesomeIcon';
 
 export interface IPlayerStatusIndicatorProps {
   player: PlayerVM;
@@ -64,7 +64,7 @@ export const PlayerStatusIndicator: React.FC<IPlayerStatusIndicatorProps> = obse
               size="small" 
               variant="contained" 
               sx={{ width: '100%' }}>
-              <FontAwesomeIcon className="me-1" icon={faDove} />
+              <FontAwesomeIcon sx={{ mr: .5 }} icon={faDove} />
               Perdonar
             </InfoButton>
             :

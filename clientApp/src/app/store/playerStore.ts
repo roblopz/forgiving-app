@@ -1,17 +1,21 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { Except } from 'type-fest';
 import { debounce } from 'lodash';
 
 import { 
+  OnPlayerUpdatedDocument,
+  OnPlayerUpdatedSubscription,
   PlayerFragment, 
   PlayerStatus, 
   UpdatePlayerDocument, 
-  UpdatePlayerInput, 
+  UpdatePlayerMutation, 
   UpdatePlayerMutationVariables 
 } from "@graphql/types";
 
 import { client } from '@graphql/client';
 import { userStore } from './userStore';
+import { uiStore } from './uiStore';
+import { handleError } from "@lib/errors/errorHandling";
 
 interface PlayerVMClass extends Except<PlayerFragment, '__typename'> {
   setStatus(status: PlayerStatus): void;
@@ -74,7 +78,7 @@ export class PlayerVM implements PlayerVMClass {
     public imagePath?: string
   ) {
     makeAutoObservable(this);
-    this.updatePlayer = debounce(this.updatePlayer.bind(this), 500);
+    this.updatePlayerOnServer = debounce(this.updatePlayerOnServer.bind(this), 500);    
   }
 
   get canEdit() {
@@ -88,20 +92,20 @@ export class PlayerVM implements PlayerVMClass {
   setStatus(status: PlayerStatus) {
     if (this.canEdit) {
       this.status = status;
-      this.updatePlayer();
+      this.updatePlayerOnServer();
     }
   }
 
   async setHateLevel(hateLevel: number) {
     if (this.canEdit) {
       this.hateLevel = hateLevel;
-      this.updatePlayer();      
+      this.updatePlayerOnServer();      
     }
   }
 
-  private async updatePlayer() {
+  private async updatePlayerOnServer() {
     try {
-      await client.mutate<UpdatePlayerInput, UpdatePlayerMutationVariables>({
+      await client.mutate<UpdatePlayerMutation, UpdatePlayerMutationVariables>({
         mutation: UpdatePlayerDocument,
         variables: {
           input: {
@@ -110,10 +114,9 @@ export class PlayerVM implements PlayerVMClass {
             status: this.status
           }
         }
-      });  
+      });      
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
+      handleError(err).onAnyError('HANDLE_DEFAULT');
     }
   }
 }
@@ -123,6 +126,31 @@ class PlayerStore {
 
   constructor() {
     makeAutoObservable(this);
+
+    const playerUpdatedSubscription = client.subscribe<OnPlayerUpdatedSubscription>({
+      query: OnPlayerUpdatedDocument      
+    });
+
+    playerUpdatedSubscription.subscribe((next) => {
+      if (next.data?.updatedPlayer) {
+        const updatedPlayer = next.data.updatedPlayer;
+        if (!userStore.isLoggedIn || userStore.currentUser.player.id != updatedPlayer.id) {
+          const targetClientPlayer = this.players.find(p => p.id == updatedPlayer.id);
+          if (targetClientPlayer) {
+            runInAction(() => {
+              targetClientPlayer.hateLevel = updatedPlayer.hateLevel;
+              targetClientPlayer.status = updatedPlayer.status;
+            });
+          }
+        }
+      }
+    }, (err) => {      
+      handleError(err).onAnyError((err) => {
+        // eslint-disable-next-line no-console
+        console.error(err);
+        uiStore.enqueueSnackbar('Disconnected from server...', { variant: 'warning' });
+      });
+    });
   }
 
   setPlayers(players: PlayerFragment[]) {

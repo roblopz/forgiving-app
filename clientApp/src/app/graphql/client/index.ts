@@ -14,7 +14,7 @@ const commLink = split(
       definition.operation === 'subscription'
     );
   },
-  authLink.concat(wsLink),
+  wsLink,
   authLink.concat(httpLink),
 );
 

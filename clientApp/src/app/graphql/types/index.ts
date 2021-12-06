@@ -13,11 +13,23 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
+};
+
+export type AppSettingsDto = {
+  __typename?: 'AppSettingsDTO';
+  currentConflict: ConflictDto;
+};
+
+export type ConflictDto = {
+  __typename?: 'ConflictDTO';
+  dateStarted: Scalars['DateTime'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  login: User;
+  login: UserDto;
   updatePlayer: Player;
 };
 
@@ -48,6 +60,7 @@ export enum PlayerStatus {
 
 export type Query = {
   __typename?: 'Query';
+  appSettings: AppSettingsDto;
   getAllPlayers: Array<Player>;
   getPlayer: Player;
 };
@@ -68,8 +81,8 @@ export type UpdatePlayerInput = {
   status: PlayerStatus;
 };
 
-export type User = {
-  __typename?: 'User';
+export type UserDto = {
+  __typename?: 'UserDTO';
   id: Scalars['ID'];
   player?: Maybe<Player>;
   type: UserType;
@@ -81,6 +94,11 @@ export enum UserType {
   Player = 'PLAYER'
 }
 
+export type AppSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AppSettingsQuery = { __typename?: 'Query', appSettings: { __typename?: 'AppSettingsDTO', currentConflict: { __typename?: 'ConflictDTO', dateStarted: any } } };
+
 export type PlayerFragment = { __typename?: 'Player', id: string, name: string, hateLevel: number, status: PlayerStatus, imagePath?: string | null | undefined };
 
 export type GetAllPlayersQueryVariables = Exact<{ [key: string]: never; }>;
@@ -91,7 +109,7 @@ export type GetAllPlayersQuery = { __typename?: 'Query', players: Array<{ __type
 export type OnPlayerUpdatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OnPlayerUpdatedSubscription = { __typename?: 'Subscription', player: { __typename?: 'Player', id: string, name: string, hateLevel: number, status: PlayerStatus, imagePath?: string | null | undefined } };
+export type OnPlayerUpdatedSubscription = { __typename?: 'Subscription', updatedPlayer: { __typename?: 'Player', id: string, name: string, hateLevel: number, status: PlayerStatus, imagePath?: string | null | undefined } };
 
 export type UpdatePlayerMutationVariables = Exact<{
   input: UpdatePlayerInput;
@@ -100,7 +118,7 @@ export type UpdatePlayerMutationVariables = Exact<{
 
 export type UpdatePlayerMutation = { __typename?: 'Mutation', updated: { __typename?: 'Player', id: string, name: string, hateLevel: number, status: PlayerStatus, imagePath?: string | null | undefined } };
 
-export type UserFragment = { __typename?: 'User', id: string, type: UserType, userName: string, player?: { __typename?: 'Player', hateLevel: number, id: string, name: string, status: PlayerStatus } | null | undefined };
+export type UserFragment = { __typename?: 'UserDTO', id: string, type: UserType, userName: string, player?: { __typename?: 'Player', hateLevel: number, id: string, name: string, status: PlayerStatus } | null | undefined };
 
 export type LoginMutationVariables = Exact<{
   password: Scalars['String'];
@@ -108,7 +126,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', user: { __typename?: 'User', id: string, type: UserType, userName: string, player?: { __typename?: 'Player', hateLevel: number, id: string, name: string, status: PlayerStatus } | null | undefined } };
+export type LoginMutation = { __typename?: 'Mutation', user: { __typename?: 'UserDTO', id: string, type: UserType, userName: string, player?: { __typename?: 'Player', hateLevel: number, id: string, name: string, status: PlayerStatus } | null | undefined } };
 
 export const PlayerFragmentDoc = gql`
     fragment Player on Player {
@@ -120,7 +138,7 @@ export const PlayerFragmentDoc = gql`
 }
     `;
 export const UserFragmentDoc = gql`
-    fragment User on User {
+    fragment User on UserDTO {
   id
   player {
     hateLevel
@@ -132,6 +150,42 @@ export const UserFragmentDoc = gql`
   userName
 }
     `;
+export const AppSettingsDocument = gql`
+    query AppSettings {
+  appSettings {
+    currentConflict {
+      dateStarted
+    }
+  }
+}
+    `;
+
+/**
+ * __useAppSettingsQuery__
+ *
+ * To run a query within a React component, call `useAppSettingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAppSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAppSettingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAppSettingsQuery(baseOptions?: Apollo.QueryHookOptions<AppSettingsQuery, AppSettingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AppSettingsQuery, AppSettingsQueryVariables>(AppSettingsDocument, options);
+      }
+export function useAppSettingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AppSettingsQuery, AppSettingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AppSettingsQuery, AppSettingsQueryVariables>(AppSettingsDocument, options);
+        }
+export type AppSettingsQueryHookResult = ReturnType<typeof useAppSettingsQuery>;
+export type AppSettingsLazyQueryHookResult = ReturnType<typeof useAppSettingsLazyQuery>;
+export type AppSettingsQueryResult = Apollo.QueryResult<AppSettingsQuery, AppSettingsQueryVariables>;
 export const GetAllPlayersDocument = gql`
     query GetAllPlayers {
   players: getAllPlayers {
@@ -168,7 +222,7 @@ export type GetAllPlayersLazyQueryHookResult = ReturnType<typeof useGetAllPlayer
 export type GetAllPlayersQueryResult = Apollo.QueryResult<GetAllPlayersQuery, GetAllPlayersQueryVariables>;
 export const OnPlayerUpdatedDocument = gql`
     subscription OnPlayerUpdated {
-  player: onPlayerUpdated {
+  updatedPlayer: onPlayerUpdated {
     ...Player
   }
 }

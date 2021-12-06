@@ -7,9 +7,9 @@ import Grid from '@mui/material/Grid';
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle, faSpinner } from '@fortawesome/free-solid-svg-icons'
 
+import { FontAwesomeIcon } from '@components/shared/uiElements/styledFontAwesomeIcon';
 import { LoginMutationVariables, useLoginMutation } from '@graphql/types';
 import { userStore } from '@store/userStore';
 import { handleError } from '@lib/errors/errorHandling';
@@ -45,12 +45,12 @@ export const LoginDialog: React.FC<ILoginDialogProps> = ({ open, handleClose }) 
   }, [loginError]);
 
   const onClose = useCallback(() => {
-    if (!loading) {      
+    if (!loading) {
       handleClose();
 
       // AppBar button takes focus on dialog form submit...
       if ((document.activeElement as HTMLElement)?.blur)
-      (document.activeElement as HTMLElement).blur();
+        (document.activeElement as HTMLElement).blur();
     }
   }, [reset, handleClose, loading]);
 
@@ -68,15 +68,14 @@ export const LoginDialog: React.FC<ILoginDialogProps> = ({ open, handleClose }) 
       userStore.login(loginRes.user);
       onClose();
     } catch (err) {
-      handleError(err, {
-        handleValidationError: () => {          
-          setLoginError('Usuario/contraseña inválido');
-        }
-      });
-    } finally {    
+      handleError(err).onValidationError(() => {
+        setLoginError('Usuario/contraseña inválido');
+      }).onAnyError('HANDLE_DEFAULT');
+
+    } finally {
       resetLoading();
     }
-  }) as SubmitHandler<LoginMutationVariables>);  
+  }) as SubmitHandler<LoginMutationVariables>);
 
   return (
     <Dialog open={open}
@@ -87,7 +86,7 @@ export const LoginDialog: React.FC<ILoginDialogProps> = ({ open, handleClose }) 
         <Grid container spacing={1}>
           <Grid item xs={12} sx={{ textAlign: 'center' }}>
             <Box sx={{ color: 'info.main', mb: loginError ? 1 : 0 }}>
-              <FontAwesomeIcon size="3x" className="mb-1"
+              <FontAwesomeIcon size="3x" sx={{ mb: .5 }}
                 icon={loading ? faSpinner : faUserCircle}
                 spin={loading} />
             </Box>
@@ -121,11 +120,11 @@ export const LoginDialog: React.FC<ILoginDialogProps> = ({ open, handleClose }) 
               )} />
           </Grid>
           <Grid item xs={12}>
-            <Button type="submit" 
+            <Button type="submit"
               disabled={loading}
               color="primary"
               variant="contained"
-              className="w-100 mt-3">
+              sx={{ width: '100%', mt: 2 }}>
               LOGIN
             </Button>
           </Grid>

@@ -49,8 +49,14 @@ const graphqlPath = config.getSetting('Server.graphqlPath');
     });    
 
     const subscriptionServer = SubscriptionServer.create(
-      { schema, execute, subscribe }, 
-      { server: httpServer, path: graphqlPath }
+      {
+        schema, 
+        execute, 
+        subscribe
+      }, 
+      { server: httpServer, 
+        path: graphqlPath 
+      }
     );
 
     const server = new ApolloServer({
