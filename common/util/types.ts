@@ -19,3 +19,5 @@ export type NestedValueOf<Obj, Key extends string> =
       : never
     : Key extends keyof Obj ? Obj[Key] : never
   : never;
+
+export const enumToKeys = <T>(enumType: T) => Object.keys(enumType).map(t => enumType[t as keyof T]);

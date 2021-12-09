@@ -4,9 +4,9 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
+import * as yup from 'yup';
 import { faUserCircle, faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import { FontAwesomeIcon } from '@components/shared/uiElements/styledFontAwesomeIcon';

@@ -1,9 +1,9 @@
-import { injectable } from "inversify";
-import { Query, Resolver } from "type-graphql";
+import { injectable } from 'inversify';
+import { Query, Resolver } from 'type-graphql';
 import moment from 'moment';
 
-import { AppResolver } from "@applicationCore/decorators/appResolverDecorator";
-import { AppSettingsDTO, ConflictDTO } from "@application/dto/appSettings";
+import { AppResolver } from '@application.core/decorators';
+import { AppSettingsDTO, ConflictDTO } from '@application/dto/appSettings';
 
 @injectable()
 @Resolver(AppSettingsDTO)

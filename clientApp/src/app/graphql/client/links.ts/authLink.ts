@@ -1,7 +1,7 @@
-import { ApolloLink } from "@apollo/client";
+import { ApolloLink } from '@apollo/client';
 
-import { appConfig } from "@lib/appConfig";
-import { getCookieAuthToken, setCookieAuthToken } from "@lib/util/authUtil";
+import { appConfig } from '@lib/appConfig';
+import { getCookieAuthToken, setCookieAuthToken } from '@lib/util/authUtil';
 
 function isHeaders(headers: unknown): headers is Headers {
   return !!headers;

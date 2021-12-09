@@ -1,6 +1,5 @@
-import { AuthChecker } from "type-graphql";
-
-import { IGraphqlCtx } from "@application/core/graphql/graphqlCtx";
+import { AuthChecker } from 'type-graphql';
+import { IGraphqlCtx } from '@application.core/graphql';
 
 export const graphqlAuthChecker: AuthChecker<IGraphqlCtx> = ({ context }, roles) => {
   if (!context.user) return false;

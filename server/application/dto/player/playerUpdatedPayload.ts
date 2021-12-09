@@ -1,4 +1,4 @@
-import { PlayerDTO } from "./playerDTO";
+import { PlayerDTO } from './playerDTO';
 
 export interface IPlayerUpdatedPayload {
   data: PlayerDTO;

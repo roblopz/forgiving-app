@@ -1,7 +1,7 @@
-import { Field, ID, ObjectType, registerEnumType } from "type-graphql";
+import { Field, ID, ObjectType, registerEnumType } from 'type-graphql';
 import { AutoMap } from '@automapper/classes';
 
-import { PlayerStatus } from "@domain/entities";
+import { PlayerStatus } from '@domain/entities';
 
 registerEnumType(PlayerStatus, { name: 'PlayerStatus' });
 

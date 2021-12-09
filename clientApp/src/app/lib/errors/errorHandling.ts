@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 
-import { Except } from "type-fest";
+import { Except } from 'type-fest';
 
-import { AppAuthError, AppValidationError } from "@common/validation/errors";
+import { AppAuthError, AppValidationError } from '@common/validation/errors';
 import { 
   isApolloError,
   isAppError,

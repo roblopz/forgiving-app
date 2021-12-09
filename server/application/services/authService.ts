@@ -1,20 +1,20 @@
-import { Request, Response } from "express";
-import { injectable } from "inversify";
+import { Request, Response } from 'express';
+import { injectable } from 'inversify';
 
 import settings from '@infraestructure/config';
-import { IoCToken } from "@domain/core/IoCToken";
-import { IAppUser } from "@domain/entities";
-import { IAuthService } from "@domain/service";
-import { AppService } from "@applicationCore/decorators/appServiceDecorator";
+import { IoCToken } from '@application.core/IoC';
+import { AppService } from '@application.core/decorators';
+import { IAuthService } from '@application.core/service';
+import { IUser } from '@domain/entities';
 
 @injectable()
 @AppService(IoCToken.AuthService, () => settings.getSetting('env') === "production")
 export class AuthService implements IAuthService {
-  authorizeRequest(_request: Request, _throwOnJwtError = true): Promise<IAppUser> {
+  authorizeRequest(_request: Request, _throwOnJwtError = true): Promise<IUser> {
     throw new Error("Method not implemented.");
   }
 
-  grantAuthorization(_response: Response, _user: IAppUser): Promise<void> {
+  grantAuthorization(_response: Response, _user: IUser): Promise<void> {
     throw new Error("Method not implemented.");
   }
 }

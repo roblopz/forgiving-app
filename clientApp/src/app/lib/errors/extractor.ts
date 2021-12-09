@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { ApolloError } from '@apollo/client';
-import { GraphQLError } from "graphql";
-import { Except } from "type-fest";
+import { GraphQLError } from 'graphql';
+import { Except } from 'type-fest';
 
 import { AppError, AppAuthError, AppValidationError } from '@common/validation/errors';
 

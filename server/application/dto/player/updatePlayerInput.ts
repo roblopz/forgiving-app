@@ -1,7 +1,7 @@
-import { Field, ID, InputType } from "type-graphql";
-import { IsIn, IsInt, Max, Min } from "class-validator";
+import { Field, ID, InputType } from 'type-graphql';
+import { IsIn, IsInt, Max, Min } from 'class-validator';
 
-import { PlayerStatus } from "@domain/entities";
+import { PlayerStatus } from '@domain/entities';
 
 @InputType()
 export class UpdatePlayerInput {

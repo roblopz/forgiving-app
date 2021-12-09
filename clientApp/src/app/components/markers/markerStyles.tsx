@@ -1,4 +1,4 @@
-import { createStyles } from "@lib/util/muiUtil";
+import { createStyles } from '@lib/util/muiUtil';
 
 export const markerStyles = createStyles({
   markerCardTitle: {

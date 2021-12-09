@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from 'mobx';
 import { Except } from 'type-fest';
 import { debounce } from 'lodash';
 
@@ -10,12 +10,12 @@ import {
   UpdatePlayerDocument, 
   UpdatePlayerMutation, 
   UpdatePlayerMutationVariables 
-} from "@graphql/types";
+} from '@graphql/types';
 
 import { client } from '@graphql/client';
 import { userStore } from './userStore';
 import { uiStore } from './uiStore';
-import { handleError } from "@lib/errors/errorHandling";
+import { handleError } from '@lib/errors/errorHandling';
 
 interface PlayerVMClass extends Except<PlayerFragment, '__typename'> {
   setStatus(status: PlayerStatus): void;

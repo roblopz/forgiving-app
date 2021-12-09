@@ -1,4 +1,4 @@
-import { SxProps } from "@mui/system";
+import { SxProps } from '@mui/system';
 import { Theme } from '@mui/material/styles';
 
 export type MuiStyleRecord = { [key: string]: SxProps<Theme> };

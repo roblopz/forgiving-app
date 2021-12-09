@@ -1,5 +1,5 @@
-import { Field, ObjectType } from "type-graphql";
-import { ConflictDTO } from "./conflictDTO";
+import { Field, ObjectType } from 'type-graphql';
+import { ConflictDTO } from './conflictDTO';
 
 @ObjectType()
 export class AppSettingsDTO {

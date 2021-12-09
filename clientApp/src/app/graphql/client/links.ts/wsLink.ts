@@ -1,5 +1,5 @@
-import { WebSocketLink } from "@apollo/client/link/ws";
-import { appConfig } from "@lib/appConfig";
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { appConfig } from '@lib/appConfig';
 
 export const wsLink = new WebSocketLink({
   uri: appConfig.graphqlWsUrl,

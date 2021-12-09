@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import PacmanLoader from "react-spinners/PacmanLoader";
+import PacmanLoader from 'react-spinners/PacmanLoader';
 import { Box } from '@mui/material';
 
 import { playerStore } from '@store/playerStore';

@@ -18,11 +18,11 @@
     "experimentalDecorators": true,
     "paths": {
       "@application/*": ["application/*"],
-      "@applicationDto/*": ["application/dto/*"],
-      "@applicationService": ["application/services/index"],
-      "@applicationCore/*": ["application/core/*"],
+      "@application.core/*": ["application.core/*"],
       "@domain/*": ["domain/*"],
+      "@domain.core/*": ["domain.core/*"],
       "@infraestructure/*": ["infraestructure/*"],
+      "@infraestructure.core/*": ["infraestructure.core/*"],
       "@common/*": ["../common/*"]
     }
   }

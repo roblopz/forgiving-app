@@ -1,4 +1,4 @@
-import { IEntity } from "./IEntity";
+import { IEntity } from '@domain.core/entity/IEntity';
 
 export enum PlayerStatus {
   WAR = 'WAR',

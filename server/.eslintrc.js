@@ -20,6 +20,7 @@ module.exports = {
   ],
   rules: {
     "no-console": 1,
-    "@typescript-eslint/no-unused-vars": ['error', { "argsIgnorePattern": "^_" }]
+    "@typescript-eslint/no-unused-vars": ['error', { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-empty-interface": 0,
   }
 }

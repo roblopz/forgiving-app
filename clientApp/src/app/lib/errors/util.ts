@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { AppValidationError, ValidationError } from "@common/validation/errors";
+import { AppValidationError, ValidationError } from '@common/validation/errors';
 import { Paths } from '@common/util/types';
 import { isAppValidationError } from './extractor';
 

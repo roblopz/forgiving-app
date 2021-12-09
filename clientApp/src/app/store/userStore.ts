@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable } from 'mobx';
 import { Except } from 'type-fest';
 
 import { UserFragment } from '@graphql/types';

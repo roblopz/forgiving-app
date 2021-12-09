@@ -1,5 +1,5 @@
 
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from 'mobx';
 import { OptionsObject as SnackbarOptions, SnackbarMessage } from 'notistack';
 
 type EnqueuedSnackbar = {

@@ -1,7 +1,8 @@
-import { Field, ID, ObjectType, registerEnumType } from "type-graphql";
-import { UserType } from "@domain/entities";
-import { PlayerDTO } from "../player";
-import { AutoMap } from "@automapper/classes";
+import { Field, ID, ObjectType, registerEnumType } from 'type-graphql';
+
+import { UserType } from '@domain/entities';
+import { AutoMap } from '@automapper/classes';
+import { PlayerDTO } from '../player';
 
 registerEnumType(UserType, { name: 'UserType' });
 

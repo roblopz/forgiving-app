@@ -1,8 +1,8 @@
-import { RequestHandler } from "express";
-import { Container } from "inversify";
+import { RequestHandler } from 'express';
+import { Container } from 'inversify';
 
-import { IAuthService } from "@domain/service";
-import { IoCToken } from "@domain/core/IoCToken";
+import { IAuthService } from '@application.core/service';
+import { IoCToken } from '@application.core/IoC';
 
 export function authExpressMiddleware(appContainer: Container): RequestHandler {
   return async function (request, _res, next) {

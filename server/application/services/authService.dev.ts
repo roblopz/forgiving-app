@@ -1,13 +1,13 @@
-import { injectable } from "inversify";
-import { Request, Response } from "express";
+import { injectable } from 'inversify';
+import { Request, Response } from 'express';
 
 import settings from '@infraestructure/config';
-import { IAppUser } from "@domain/entities";
-import { IAuthService } from "@domain/service";
-import { AppService } from "@application/core/decorators/appServiceDecorator";
-import { IoCToken } from "@domain/core/IoCToken";
-import { verify, getAuthToken } from "@application/core/auth";
-import { AppAuthError, AppError } from "@common/validation/errors";
+import { IUser } from '@domain/entities';
+import { AppAuthError, AppError } from '@common/validation/errors';
+import { AppService } from '@application.core/decorators';
+import { IAuthService } from '@application.core/service';
+import { signToken, verifyToken } from '@application.core/lib/jwt';
+import { IoCToken } from '@application.core/IoC';
 
 @injectable()
 @AppService(IoCToken.AuthService, () => settings.getSetting('env') !== "production")
@@ -18,11 +18,11 @@ export class DevAuthService implements IAuthService {
     return expHours * 3600;
   }
 
-  async authorizeRequest(request: Request, throwOnJwtError = true): Promise<IAppUser> {        
+  async authorizeRequest(request: Request, throwOnJwtError = true): Promise<IUser> {        
     if (request.headers.authorization && request.headers.authorization.split(' ')[0] === 'Bearer') {
       const authToken = request.headers.authorization.split(' ')[1];      
       if (authToken?.length) {
-        const [authPayload, err] = await verify<IAppUser>(authToken, this.jwtSecret);
+        const [authPayload, err] = await verifyToken<IUser>(authToken, this.jwtSecret);
         if (authPayload) {
           return authPayload;
         } else if (throwOnJwtError) {
@@ -32,11 +32,11 @@ export class DevAuthService implements IAuthService {
     }
   }
 
-  async grantAuthorization(response: Response, user: IAppUser): Promise<void> {
+  async grantAuthorization(response: Response, user: IUser): Promise<void> {
     if (!user) 
       throw new AppError('User argument not provided');
 
-    const authToken = await getAuthToken(user, this.jwtSecret, {
+    const authToken = await signToken(user, this.jwtSecret, {
       expiresIn: this.authExpirationSeconds
     });
 

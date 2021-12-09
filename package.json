@@ -10,17 +10,17 @@
     "eslint-client": "eslint 'clientApp/src/**/*.{js,ts,tsx}'",
     "graphql-gen": "graphql-codegen --config codegen.yml",
     "cpy-server-files": "run-s cpy-server-files:statics cpy-server-files:configs",
-    "cpy-server-files:statics": "copyfiles -u 3 server/application/public/**/* build/server/application/public",
+    "cpy-server-files:statics": "copyfiles -u 3 server/application/assets/**/* build/server/application/assets",
     "cpy-server-files:configs": "copyfiles -u 2 common/config/**/*.yml build/common/config"
   },
   "_moduleAliases": {
     "@application": "build/server/application",
-    "@applicationDto": "build/server/application/dto",
-    "@applicationService": "build/server/application/services/index",
-    "@applicationCore": "build/server/application/core",
+    "@application.core": "build/server/application.core",
     "@domain": "build/server/domain",
+    "@domain.core": "build/server/domain.core",
     "@infraestructure": "build/server/infraestructure",
-    "@common": "build/common"
+    "@infraestructure.core": "build/server/infraestructure.core",
+    "@common": "build/common"    
   },
   "author": "",
   "license": "ISC",
@@ -56,6 +56,7 @@
     "mobx-react-lite": "^3.2.2",
     "module-alias": "^2.2.2",
     "moment": "^2.29.1",
+    "mongoose": "^6.0.14",
     "notistack": "^2.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

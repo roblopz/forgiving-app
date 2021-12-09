@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import 'module-alias/register';
 import 'reflect-metadata';
-import './application/core/bootstrap';
+import './application/bootstrap';
 
 import express from 'express';
 import cookieParser from 'cookie-parser';
@@ -14,11 +14,9 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
 
 import config from '@infraestructure/config';
-import { AppContainer } from '@applicationCore/IoC/container';
-import { IGraphqlCtx } from '@application/core/graphql/graphqlCtx';
-import { IoCToken } from '@domain/core/IoCToken';
-import { authExpressMiddleware, graphqlAuthChecker } from '@application/middleware';
-import { errorFormatter } from '@application/core/graphql/formatError';
+import { authExpressMiddleware, graphqlAuthChecker, graphqlErrorFormatter } from '@application/middleware';
+import { Container, IoCToken } from '@application.core/IoC';
+import { IGraphqlCtx } from '@application.core/graphql';
 
 function ApolloSubscriptionServerStartPlugin(subscriptionServer: SubscriptionServer): PluginDefinition {
   return {
@@ -41,9 +39,9 @@ const graphqlPath = config.getSetting('Server.graphqlPath');
     const httpServer = http.createServer(app);    
 
     const schema = await buildSchema({
+      container: Container,
       // eslint-disable-next-line @typescript-eslint/ban-types
-      resolvers: AppContainer.getAll(IoCToken.Resolver) as NonEmptyArray<Function>,
-      container: AppContainer,
+      resolvers: Container.getAll(IoCToken.Resolver) as NonEmptyArray<Function>,
       emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
       authChecker: graphqlAuthChecker
     });    
@@ -69,12 +67,12 @@ const graphqlPath = config.getSetting('Server.graphqlPath');
         const ctx: IGraphqlCtx = { user: req.user, request: req, response: res };
         return ctx;
       },
-      formatError: errorFormatter
+      formatError: graphqlErrorFormatter
     });
 
     app.use(cookieParser());
-    app.use(authExpressMiddleware(AppContainer));
-    app.use(express.static(path.resolve(__dirname, 'application/public')));
+    app.use(authExpressMiddleware(Container));
+    app.use(express.static(path.resolve(__dirname, 'application/assets')));
 
     await server.start();
     server.applyMiddleware({ app, path: graphqlPath });

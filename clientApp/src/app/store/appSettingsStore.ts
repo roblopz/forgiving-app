@@ -1,9 +1,9 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable } from 'mobx';
 import { client } from '@graphql/client';
-import { Except } from "type-fest";
+import { Except } from 'type-fest';
 
 import { AppSettingsDocument, AppSettingsQuery, ConflictDto } from '@graphql/types';
-import { handleError } from "@lib/errors/errorHandling";
+import { handleError } from '@lib/errors/errorHandling';
 
 export type Conflict = Except<ConflictDto, '__typename'>;
 

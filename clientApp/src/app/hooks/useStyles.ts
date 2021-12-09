@@ -1,5 +1,5 @@
-import { DependencyList, useMemo } from "react";
-import { MuiStyleRecord } from "@lib/util/muiUtil";
+import { DependencyList, useMemo } from 'react';
+import { MuiStyleRecord } from '@lib/util/muiUtil';
 
 const constDeps: DependencyList = [];
 
