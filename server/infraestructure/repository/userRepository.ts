@@ -4,11 +4,11 @@ import { IUserRepository } from '@domain/repositories/IUserRepository';
 import { IUser } from '@domain/entities';
 import { UserModel } from '@infraestructure/models';
 import { MongoRepository } from './mongoRepository';
-import { AppService } from '@application.core/decorators';
-import { IoCToken } from '@application.core/IoC';
+import { IoCToken } from '@application.core/IoC/tokens';
+import { AppRepository } from '@application.core/decorators/appRepository';
 
 @injectable()
-@AppService(IoCToken.UserRepository)
+@AppRepository(IoCToken.UserRepository)
 export class UserRepository extends MongoRepository<IUser> implements IUserRepository {
   constructor(
     @inject(IoCToken.PlayerModel) private readonly userModel: UserModel
@@ -16,7 +16,7 @@ export class UserRepository extends MongoRepository<IUser> implements IUserRepos
     super(userModel);
   }
 
-  async getByUsername(username: string): Promise<IUser> {        
+  async getByUsername(username: string): Promise<IUser> {
     return await this.userModel.findOne({ userName: username });
   }
 }

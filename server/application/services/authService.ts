@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { injectable } from 'inversify';
 
 import settings from '@infraestructure/config';
-import { IoCToken } from '@application.core/IoC';
+import { IoCToken } from '@application.core/IoC/tokens';
 import { AppService } from '@application.core/decorators';
 import { IAuthService } from '@application.core/service';
 import { IUser } from '@domain/entities';

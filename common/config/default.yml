@@ -9,3 +9,16 @@ Client:
 Auth:
   expHours: 2
   devAuthTokenHeader: 'X-Auth-Token'
+DB:
+  dbName: 'forgivingAppDB'
+  connectionString: 'mongodb://localhost:27017'
+  user: ''
+  password: ''
+  replicaSet:
+    enabled: true
+    setName: 'rs0'
+    instances:
+      - mongodb://localhost:27018
+      - mongodb://localhost:27019
+      - mongodb://localhost:27020
+  

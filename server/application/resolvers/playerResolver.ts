@@ -3,7 +3,7 @@ import { Arg, Authorized, Mutation, Publisher, PubSub, Query, Resolver, Root, Su
 import { Mapper } from '@automapper/core';
 
 import { AppResolver } from '@application.core/decorators';
-import { IoCToken } from '@application.core/IoC';
+import { IoCToken } from '@application.core/IoC/tokens';
 import { IPlayerUpdatedPayload, PlayerDTO, UpdatePlayerInput, PlayerTopics } from '@application/dto/player';
 import { UserType } from '@domain/entities';
 import { IPlayerRepository } from '@domain/repositories';
@@ -17,7 +17,7 @@ export class PlayerResolver {
   constructor(
     @inject(IoCToken.PlayerRepository) private playerRepo: IPlayerRepository,
     @inject(IoCToken.AppMapper) private mapper: Mapper
-  ) {}
+  ) { }
 
   @Query(_returns => [PlayerDTO])
   async getAllPlayers(): Promise<PlayerDTO[]> {
@@ -44,7 +44,8 @@ export class PlayerResolver {
     target.status = input.status;
     target.hateLevel = input.hateLevel;
 
-    const res = this.mapper.map(await this.playerRepo.update(target), PlayerDTO, Player);
+    const updated = await this.playerRepo.update(target);
+    const res = this.mapper.map(updated, PlayerDTO, Player);
     await publish({ data: res });
     return res;
   }

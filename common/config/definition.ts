@@ -13,5 +13,16 @@ export type Config = {
   Auth: {
     expHours: number,
     devAuthTokenHeader?: string
+  },
+  DB: {
+    dbName: string,
+    connectionString?: string,
+    user?: string
+    password?: string
+    replicaSet?: {
+      enabled: boolean
+      setName: string
+      instances: string[]
+    }
   }
 }

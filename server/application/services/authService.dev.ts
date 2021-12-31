@@ -7,7 +7,7 @@ import { AppAuthError, AppError } from '@common/validation/errors';
 import { AppService } from '@application.core/decorators';
 import { IAuthService } from '@application.core/service';
 import { signToken, verifyToken } from '@application.core/lib/jwt';
-import { IoCToken } from '@application.core/IoC';
+import { IoCToken } from '@application.core/IoC/tokens';
 
 @injectable()
 @AppService(IoCToken.AuthService, () => settings.getSetting('env') !== "production")

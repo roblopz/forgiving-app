@@ -8,7 +8,7 @@ import { AppSettingsDTO, ConflictDTO } from '@application/dto/appSettings';
 @injectable()
 @Resolver(AppSettingsDTO)
 @AppResolver()
-export class AppSettingsResolver {  
+export class AppSettingsResolver {
   @Query(_returns => AppSettingsDTO)
   async appSettings(): Promise<AppSettingsDTO> {
     const res = new AppSettingsDTO();

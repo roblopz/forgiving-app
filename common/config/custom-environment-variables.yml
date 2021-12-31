@@ -1,3 +1,8 @@
 env: NODE_ENV
 Server:
   jwtSecret: JWT_SECRET
+DB:
+  user: 'MONGO_USER'
+  password: 'MONGO_PASSWORD'
+  replicaSet:
+    enabled: REPLICA_SET_ENABLED

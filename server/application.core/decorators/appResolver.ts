@@ -1,8 +1,15 @@
-import { Container, IoCToken } from '../IoC';
+import { IoCToken } from '../IoC/tokens';
+import { GlobalContainer } from '../IoC/container';
+
+export type AppResolverDefinition = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  constructor: new (...args: never[]) => any;
+}
 
 export function AppResolver() : ClassDecorator {
   return function (target) {
-    Container.bind(IoCToken.Resolver).toConstantValue(target);
-    Container.bind(target).toSelf();
+    GlobalContainer.bind<AppResolverDefinition>(IoCToken.ResolverDefinition).toConstantValue({
+      constructor: target as unknown as AppResolverDefinition['constructor']
+    });
   };
 }

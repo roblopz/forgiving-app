@@ -1,22 +1,33 @@
 
 const serviceTokens = {
-  AuthService: 'AUTH_SERVICE'
+  AuthService: Symbol.for('AuthService')
 };
 
 const modelTokens = {
-  PlayerModel: Symbol.for('PLAYER_MODEL'),
-  UserModel: Symbol.for('USER_MODEL')
+  PlayerModel: Symbol.for('PlayerModel'),
+  UserModel: Symbol.for('UserModel')
 };
 
 const repositoryTokens = {
-  PlayerRepository: Symbol.for('PLAYER_REPOSITORY'),
-  UserRepository: Symbol.for('USER_REPOSITORY')
+  PlayerRepository: Symbol.for('PlayerRepository'),
+  UserRepository: Symbol.for('UserRepository')
+};
+
+const core = {
+  AppMapper: Symbol.for('Mapper'),
+  AppDB: Symbol.for('AppDB'),
+  ServiceDefinition: Symbol.for('ServiceDefinition'),
+  ResolverDefinition: Symbol.for('ResolverDefinition'),
+  RepositoryDefinition: Symbol.for('RepositoryDefinition'),
+  ModelDefinition: Symbol.for('ModelDefinition'),
+  AppSeeder: Symbol.for('AppSeeder'),
+  Container: Symbol.for('Container'),
+  UnitOfWork: Symbol.for('UnitOfWork')
 };
 
 export const IoCToken = {
+  ...core,
   ...serviceTokens,
   ...modelTokens,
-  ...repositoryTokens,
-  AppMapper: Symbol.for('APP_MAPPER'),
-  Resolver: Symbol.for('RESOLVER')
+  ...repositoryTokens  
 };

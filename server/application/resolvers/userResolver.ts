@@ -6,7 +6,7 @@ import { AppResolver } from '@application.core/decorators';
 import { UserDTO } from '@application/dto/user/userDTO';
 import { PlayerDTO } from '@application/dto/player';
 import { IAuthService } from '@application.core/service';
-import { IoCToken } from '@application.core/IoC';
+import { IoCToken } from '@application.core/IoC/tokens';
 import { IGraphqlCtx } from '@application.core/graphql';
 import { AppValidationError } from '@common/validation/errors';
 import { IPlayerRepository, IUserRepository } from '@domain/repositories';

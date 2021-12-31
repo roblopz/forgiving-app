@@ -4,15 +4,15 @@ import { IPlayerRepository } from '@domain/repositories/IPlayerRepository';
 import { IPlayer } from '@domain/entities';
 import { PlayerModel } from '@infraestructure/models/player';
 import { MongoRepository } from './mongoRepository';
-import { IoCToken } from '@application.core/IoC';
-import { AppService } from '@application.core/decorators';
+import { IoCToken } from '@application.core/IoC/tokens';
+import { AppRepository } from '@application.core/decorators/appRepository';
 
 @injectable()
-@AppService(IoCToken.PlayerRepository)
+@AppRepository(IoCToken.PlayerRepository)
 export class PlayerRepository extends MongoRepository<IPlayer> implements IPlayerRepository {
   constructor(
-    @inject(IoCToken.PlayerModel) private playerModel: PlayerModel
-  ) {    
+    @inject(IoCToken.PlayerModel) playerModel: PlayerModel
+  ) {
     super(playerModel);
   }
 }

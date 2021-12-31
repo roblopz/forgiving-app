@@ -2,9 +2,11 @@ import { Model } from 'mongoose';
 
 import { IPlayer, PlayerStatus } from '@domain/entities';
 import { enumToKeys } from '@common/util/types';
-import { IMongooseModelFactory, ClassFromModel, MongooseSchema } from '@infraestructure.core/database';
+import { IMongooseSchemaFactory, ClassFromModel, MongooseSchema } from '@infraestructure.core/models';
 import { ObjectId } from 'bson';
 import { AutoMap } from '@automapper/classes';
+import { AppModel } from '@application.core/decorators/appModel';
+import { IoCToken } from '@application.core/IoC/tokens';
 
 export type PlayerModel = Model<IPlayer>;
 
@@ -25,9 +27,12 @@ export class Player implements ClassFromModel<PlayerModel> {
   imagePath?: string;
 }
 
-export class PlayerModelBuilder implements IMongooseModelFactory<PlayerModel> {
+@AppModel(IoCToken.PlayerModel)
+export class PlayerModelBuilder implements IMongooseSchemaFactory<PlayerModel> {  
+  modelName = 'Player';
+
   getSchema() {
-    const schema = new MongooseSchema<PlayerModel>({
+    return new MongooseSchema<PlayerModel>({
       name: {
         type: String,
         required: true,
@@ -53,7 +58,5 @@ export class PlayerModelBuilder implements IMongooseModelFactory<PlayerModel> {
         enum: [...enumToKeys(PlayerStatus)]
       }
     });
-
-    return schema;
   }
 }
