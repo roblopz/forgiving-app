@@ -15,20 +15,20 @@ export class MongoRepository<T extends IEntity> implements IRepository<T> {
 
   constructor(protected model: Model<T>) { }
 
-  async getAll() {
+  async getAll(): Promise<T[]> {
     return await this.model.find().session(this.session);
   }
 
-  async get(id: IdType) {
+  async get(id: IdType): Promise<T> {
     return await this.model.findById(id).session(this.session);
   }
 
-  async getMany(ids: IdType[]) {
+  async getMany(ids: IdType[]): Promise<T[]> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return await this.model.find({ _id: { $in: ids as any } }, null).session(this.session);
   }
 
-  async create(object: T) {
+  async create(object: T): Promise<T> {
     if (object._id) {
       // eslint-disable-next-line no-console
       console.warn(`Manually assigning _id ${object._id} field for object`);
@@ -39,7 +39,7 @@ export class MongoRepository<T extends IEntity> implements IRepository<T> {
     return newRecord;
   }
 
-  async update(object: T) {
+  async update(object: T): Promise<T> {
     if (this.isHydrated(object)) {
       return await object.save({ session: this.session });        
     } else {
@@ -47,7 +47,7 @@ export class MongoRepository<T extends IEntity> implements IRepository<T> {
     }
   }
 
-  async delete(id: IdType) {
+  async delete(id: IdType): Promise<void> {
     await this.model.findByIdAndDelete(id).session(this.session);
   }
 

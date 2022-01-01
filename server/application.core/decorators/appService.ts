@@ -1,4 +1,4 @@
-import { GlobalContainer } from '../IoC/container';
+import { GlobalContainer } from '@application.core/IoC/_global';
 import { IoCToken } from '../IoC/tokens';
 
 export type AppServiceDefinition = {

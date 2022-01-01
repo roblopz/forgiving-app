@@ -1,8 +1,8 @@
 
 import { Mapper } from '@automapper/core';
 
+import { GlobalContainer } from '@application.core/IoC/_global';
 import { IDtoRegisterer } from "../dto";
-import { GlobalContainer } from "../IoC/container";
 import { IoCToken } from "../IoC/tokens";
 
 export function DtoRegisterer() : ClassDecorator {

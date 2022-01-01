@@ -1,6 +1,5 @@
-import { Container as InversifyContainer } from 'inversify';
+import { GlobalContainer } from './_global';
 import { IoCToken } from './tokens';
-import { appMapper } from '../dto';
 import { AppResolverDefinition, AppServiceDefinition } from '@application.core/decorators';
 import { AppRepositoryDefinition } from '@application.core/decorators/appRepository';
 import { IAppDB } from '@infraestructure.core/database/IAppDB';
@@ -10,14 +9,10 @@ import { Seeder } from '@infraestructure/seed/seeder';
 import { IUnitOfWork } from '@infraestructure.core/unitOfWork';
 import { UnitOfWork } from '@infraestructure/unitOfWork';
 
-const GlobalContainer = new InversifyContainer();
-
-GlobalContainer.bind(IoCToken.AppMapper).toConstantValue(appMapper);
-GlobalContainer.bind(IoCToken.AppSeeder).to(Seeder).inTransientScope();
-GlobalContainer.bind(IoCToken.Container).toConstantValue(GlobalContainer);
-
-function createContainer() {
+export function createContainer() {
   const childContainer = GlobalContainer.createChild();
+
+  childContainer.bind(IoCToken.AppSeeder).to(Seeder).inTransientScope();
 
   // Bind service implementations
   GlobalContainer.getAll<AppServiceDefinition>(IoCToken.ServiceDefinition).forEach(service => {
@@ -52,8 +47,3 @@ function createContainer() {
 
   return childContainer;
 }
-
-export {
-  GlobalContainer,
-  createContainer as createChildContainer
-};

@@ -1,5 +1,5 @@
+import { GlobalContainer } from '@application.core/IoC/_global';
 import { IoCToken } from '../IoC/tokens';
-import { GlobalContainer } from '../IoC/container'
 
 export type AppRepositoryDefinition = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

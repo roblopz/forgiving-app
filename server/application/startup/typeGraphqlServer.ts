@@ -2,10 +2,10 @@ import path from 'path';
 import { buildSchema, NonEmptyArray, ResolverData } from 'type-graphql';
 
 import { IoCToken } from '@application.core/IoC/tokens';
-import { GlobalContainer } from '@application.core/IoC/container';
 import { graphqlAuthChecker } from '@application/middleware';
 import { IGraphqlCtx } from '@application.core/graphql';
 import { AppResolverDefinition } from '@application.core/decorators';
+import { GlobalContainer } from '@application.core/IoC/_global';
 
 export async function build() {
   const resolvers = GlobalContainer

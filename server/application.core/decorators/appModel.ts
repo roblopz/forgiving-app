@@ -1,6 +1,6 @@
+import { GlobalContainer } from '@application.core/IoC/_global';
 import { IMongooseSchemaFactory } from '@infraestructure.core/models';
 import { IoCToken } from '../IoC/tokens';
-import { GlobalContainer } from '../IoC/container';
 
 export type AppModelDefinition = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
